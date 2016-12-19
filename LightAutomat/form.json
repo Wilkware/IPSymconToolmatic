@@ -2,7 +2,7 @@
 	"elements":
 	[
 		{ "name": "StateVariable", "type": "SelectVariable", "caption": "State Variable" },
-		{ "name": "Duration",    "type": "NumberSpinner",  "caption": "Duration (in minutes)" }
+		{ "name": "Duration", "type": "NumberSpinner",  "caption": "Duration (in minutes)" }
 
 	]
 }

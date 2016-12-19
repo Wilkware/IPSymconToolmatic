@@ -27,7 +27,7 @@
 					IPS_SetIdent($eid, "DurationTrigger");
 					IPS_SetName($eid, "Trigger for #".$this->ReadPropertyInteger("StateVariable"));
 				}
-				IPS_SetEventTrigger($eid, 0, $this->ReadPropertyInteger("DurationVariable"));
+				IPS_SetEventTrigger($eid, 0, $this->ReadPropertyInteger("Duration"));
 				IPS_SetEventScript($eid, "TLA_Trigger(\$_IPS['TARGET'], \$_IPS['VALUE']));");
         IPS_SetEventActive($eid, false);
 			}
