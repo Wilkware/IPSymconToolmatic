@@ -28,7 +28,7 @@
 					IPS_SetName($eid, "TriggerEvent");
 				}
 				IPS_SetEventTrigger($eid, 0, $this->ReadPropertyInteger("StateVariable"));
-				IPS_SetEventScript($eid, "TLA_Trigger(\$_IPS['TARGET'], \$_IPS['VALUE']);");
+				IPS_SetEventScript($eid, "TLA_Trigger(\$_IPS['TARGET']);");
         IPS_SetEventActive($eid, true);
 			}
 		}
@@ -37,10 +37,10 @@
 		* This function will be available automatically after the module is imported with the module control.
 		* Using the custom prefix this function will be callable from PHP and JSON-RPC through:
 		*
-		* TLA_Trigger($id, $value);
+		* TLA_Trigger($id);
 		*
 		*/
-		public function Trigger(int $id, int $value)
+		public function Trigger(int $id)
 		{
 			$this->SendDebug("TLA_Trigger", "Id -".$id." mit Wert: ".$value, 0);
 		}
