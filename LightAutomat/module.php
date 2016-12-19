@@ -42,7 +42,7 @@
 		*/
 		public function Trigger()
 		{
-			$this->SendDebug("TLA_Trigger", "Debug", 0);
+			$this->SendDebug("TLA_Trigger", "Debug Message", 0);
 		}
 	
 	}
