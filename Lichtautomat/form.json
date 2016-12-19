@@ -1,0 +1,8 @@
+{
+	"elements":
+	[
+		{ "name": "SourceState", "type": "SelectVariable", "caption": "State" },
+		{ "name": "Duration",    "type": "NumberSpinner",  "caption": "Duration (in minutes)" }
+
+	]
+}
