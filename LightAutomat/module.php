@@ -25,10 +25,10 @@
 					$eid = IPS_CreateEvent(0 /* Trigger */);
 					IPS_SetParent($eid, $this->InstanceID);
 					IPS_SetIdent($eid, "DurationTrigger");
-					IPS_SetName($eid, "Trigger for #".$this->ReadPropertyInteger("StateVariable"));
+					IPS_SetName($eid, "TriggerEvent");
 				}
 				IPS_SetEventTrigger($eid, 0, $this->ReadPropertyInteger("StateVariable"));
-				IPS_SetEventScript($eid, "TLA_Trigger(\$_IPS['TARGET'], \$_IPS['VALUE']));");
+				IPS_SetEventScript($eid, "TLA_Trigger(\$_IPS['TARGET'], \$_IPS['VALUE']);");
         IPS_SetEventActive($eid, true);
 			}
 		}
