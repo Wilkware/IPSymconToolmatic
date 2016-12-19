@@ -1,4 +1,4 @@
-# Umrechnen
+# Lichtautomat
 
 ### Inhaltverzeichnis
 
@@ -22,44 +22,33 @@
 ### 3. Software-Installation
 
 Über das Modul-Control folgende URL hinzufügen.  
-`git://github.com/paresy/SymconMisc.git`  
+`git://github.com/Wilkware/IPSymconToolmatic.git`
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
-- Unter "Instanz hinzufügen" ist das 'Umrechnen'-Modul unter dem Hersteller '(Sonstige)' aufgeführt.  
+- Unter "Instanz hinzufügen" ist das 'Lichtautomat'-Modul unter dem Hersteller '(Sonstige)' aufgeführt.
 
 __Konfigurationsseite__:
 
 Name               | Beschreibung
 ------------------ | ---------------------------------
-Quelle             | Quellvariable, die Berechnung genutzt werden soll.
-Formel             | Formel, bei der Rechnung genutzt werden soll.
-Wert               | Testwert um die Formel zu Testen
-Button "Calculate" | Berechnet den Wert anhand des Test-"Wert"
+Statusvariable     | Quellvariable, über welche der Automat getriggert wird.
+Dauer              | Zeit, bis das Licht(Aktor) wieder ausgeschaltet werden soll.
 
 
 ### 5. Statusvariablen und Profile
 
-Die Statusvariablen/Kategorien werden automatisch angelegt. Das Löschen einzelner kann zu Fehlfunktionen führen.
+Keine.
 
-##### Statusvariablen
-
-Name  | Typ     | Beschreibung
------ | ------- | ----------------
-Value | Float   | Beinhaltet den anhand der eingerichteten Formel berechneten Wert.
-
-##### Profile:
-
-Es werden keine zusätzlichen Profile hinzugefügt
 
 ### 6. WebFront
 
-Über das WebFront werden die Variablen angezeigt. Es ist keine weitere Steuerung oder gesonderte Darstellung integriert.
+Es ist keine weitere Steuerung oder gesonderte Darstellung integriert.
 
 ### 7. PHP-Befehlsreferenz
 
-`boolean UMR_Calculate(integer $InstanzID);`  
-Berechnet und setzt den Wert "Value" des Umrechnenmoduls mit der InstanzID $InstanzID anhand der Formel neu.  
+void LTA_Trigger(integer $InstanzID, integer $Value);`
+Schaltet das Automatenmoduls mit der InstanzID $InstanzID .
 Die Funktion liefert keinerlei Rückgabewert.  
 Beispiel:  
-`UMR_Calculate(12345);`
+`LTA_Trigger(12345, false);`
