@@ -10,7 +10,7 @@
 			
 			$this->RegisterPropertyInteger("StateVariable", 0);
 			$this->RegisterPropertyInteger("Duration", 10);
-			
+      $this->RegisterTimer("TriggerTimer",0,"TLA_Trigger(\$_IPS['TARGET']);");
 		}
 	
 		public function ApplyChanges()
@@ -27,11 +27,10 @@
 					IPS_SetIdent($eid, "DurationTrigger");
 					IPS_SetName($eid, "Trigger for #".$this->ReadPropertyInteger("StateVariable"));
 				}
-				IPS_SetEventTrigger($eid, 0, $this->ReadPropertyInteger("Duration"));
+				IPS_SetEventTrigger($eid, 0, $this->ReadPropertyInteger("StateVariable"));
 				IPS_SetEventScript($eid, "TLA_Trigger(\$_IPS['TARGET'], \$_IPS['VALUE']));");
-        IPS_SetEventActive($eid, false);
+        IPS_SetEventActive($eid, true);
 			}
-			
 		}
 	
 		/**
@@ -44,7 +43,6 @@
 		public function Trigger(int $id, int $value)
 		{
 			$this->SendDebug("TLA_Trigger", "Id -".$id." mit Wert: ".$value, 0);
-
 		}
 	
 	}
