@@ -2,7 +2,7 @@
 	"translations": {
 		"de": { 
 			"State Variable": "Statusvariable",
-			"Duration (in minutes)": "Dauer (in Minuten)",
+			"Duration (in minutes)": "Dauer (in Minuten)"
 		}
 	}
 }
