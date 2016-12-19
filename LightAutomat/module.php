@@ -40,9 +40,9 @@
 		* TLA_Trigger($id);
 		*
 		*/
-		public function Trigger(int $id)
+		public function Trigger()
 		{
-			$this->SendDebug("TLA_Trigger", "Id -".$id." mit Wert: ".$value, 0);
+			$this->SendDebug("TLA_Trigger", "Debug", 0);
 		}
 	
 	}
