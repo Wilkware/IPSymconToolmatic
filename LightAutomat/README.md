@@ -35,7 +35,7 @@ __Konfigurationsseite__:
 
 Name               | Beschreibung
 ------------------ | ---------------------------------
-Statusvariable     | Quellvariable, über welche der Automat getriggert wird.
+Statusvariable     | Quellvariable, über welche der Automat getriggert wird.  Meistens im Kanal 1 von HomeMatic Geräten zu finden und ist vom Typ boolean  und hat den Namen "STATE" (z.B: wenn man die Geräte mit dem HomeMatic Configurator anlegen lässt.).
 Dauer              | Zeit, bis das Licht(Aktor) wieder ausgeschaltet werden soll.
 
 
