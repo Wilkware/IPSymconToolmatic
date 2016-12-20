@@ -57,7 +57,7 @@ Es ist keine weitere Steuerung oder gesonderte Darstellung integriert.
 ### 7. PHP-Befehlsreferenz
 
 `void LTA_Activate(int $InstanzID, boolean $Value);`  
-Aktiviert (true) oder deaktiviert (false) den Timmer mit der InstanzID $InstanzID.  
+Aktiviert (true) oder deaktiviert (false) den Timer mit der InstanzID $InstanzID.  
 Die Funktion liefert keinerlei Rückgabewert.  
 
 Beispiel:  
