@@ -40,7 +40,7 @@
 		* TLA_Activate($id, &value);
 		*
 		*/
-		public function Activate(boolean $value)
+		public function Activate(bool $value)
 		{
       if ($value  == true) {
         // Minutenberechnung = 1000ms * 1min(60s) * Duration
