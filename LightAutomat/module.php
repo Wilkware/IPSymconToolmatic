@@ -72,14 +72,15 @@ class LightAutomat extends IPSModule
   {
     if (GetValue($this->ReadPropertyInteger("StateVariable")) == true) {
 
-      if($this->RegisterPropertyBoolean("OnlyScript") == false ) {
+      if($this->ReadPropertyBoolean("OnlyScript") == false ) {
         $pid = IPS_GetParent($this->ReadPropertyInteger("StateVariable"));
       
         HM_WriteValueBoolean($pid, "STATE", false); //Gerät ausschalten
+        $this->SendDebug('TLA_Trigger', "STATE von #" . $pid . "auf false geschalten!" , 0);
         // WFC_PushNotification(xxxxx , 'Licht', '...wurde ausgeschalten!', '', 0);
       }    
       
-      if($this->RegisterPropertyBoolean("ExecScript") == true) {
+      if($this->ReadPropertyBoolean("ExecScript") == true) {
       
         if ($this->ReadPropertyInteger("ScriptVariable") <> 0)
         {
@@ -87,7 +88,6 @@ class LightAutomat extends IPSModule
           {
               $sr = IPS_RunScriptEx($this->ReadPropertyInteger("ScriptVariable"));
               $this->SendDebug('Script Execute: Return Value', $rs, 0);
-
           }
         }
       }
