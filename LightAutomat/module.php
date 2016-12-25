@@ -19,7 +19,7 @@ class LightAutomat extends IPSModule
   public function ApplyChanges()
   {
     if($this->ReadPropertyInteger("StateVariable") != 0) {
-      $this->UnregisterMessage($this->ReadPropertyInteger("StateVariable", VM_UPDATE));
+      $this->UnregisterMessage($this->ReadPropertyInteger("StateVariable"), VM_UPDATE);
     }
 
     //Never delete this line!
@@ -27,7 +27,7 @@ class LightAutomat extends IPSModule
     
     //Create our trigger
     if(IPS_VariableExists($this->ReadPropertyInteger("StateVariable"))) {
-      $this->RegisterMessage($this->ReadPropertyInteger("StateVariable"), VM_UPDATE));
+      $this->RegisterMessage($this->ReadPropertyInteger("StateVariable"), VM_UPDATE);
     }
   }
   
