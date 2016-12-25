@@ -49,7 +49,7 @@ class LightAutomat extends IPSModule
           break;
         }
         
-        if ($Data[1] == true) {}
+        if ($Data[1] == true) {
           // Minutenberechnung = 1000ms * 1min(60s) * Duration
           $this->SetTimerInterval("TriggerTimer", 1000 * 60 * $this->ReadPropertyInteger("Duration"));
         }
