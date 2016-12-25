@@ -10,7 +10,7 @@ class LightAutomat extends IPSModule
     
     $this->RegisterPropertyInteger("StateVariable", 0);
     $this->RegisterPropertyInteger("Duration", 10);
-    $this->RegisterPropertyBoolean("ExecScrip", false);
+    $this->RegisterPropertyBoolean("ExecScript", false);
     $this->RegisterPropertyInteger("ScriptVariable", 0);
     $this->RegisterPropertyBoolean("OnlyScript", false);
     $this->RegisterTimer("TriggerTimer",0,"TLA_Trigger(\$_IPS['TARGET']);");
