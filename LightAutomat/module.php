@@ -40,7 +40,7 @@ class LightAutomat extends IPSModule
   {
     $this->SendDebug('Message:SenderID', $SenderID, 0);
     $this->SendDebug('Message:Message', $Message, 0);
-    $this->SendDebug('Message:Data', $Data, 0);
+    $this->SendDebug('Message:Data', $Data[0] . " : " . $Data[1], 0);
 
     switch ($Message)
     {
