@@ -92,7 +92,7 @@ class LightAutomat extends IPSModule
         }
       }
       else {
-        this->SendDebug('Script ' . $this->ReadPropertyInteger('ScriptVariable') . ' existiert nicht!');
+        this->SendDebug('Script ' . $this->ReadPropertyInteger('ScriptVariable') . ' existiert nicht!',0);
       }
     }        
     $this->SetTimerInterval("TriggerTimer", 0);
