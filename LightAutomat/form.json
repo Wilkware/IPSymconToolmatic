@@ -1,8 +1,10 @@
 {
 	"elements":
 	[
-		{ "name": "StateVariable", "type": "SelectVariable", "caption": "State Variable" },
-		{ "name": "Duration", "type": "NumberSpinner",  "caption": "Duration (in minutes)" }
-
+		{ "type": "SelectVariable", "name": "StateVariable", "caption": "State Variable:" },
+		{ "type": "NumberSpinner", "name": "Duration",  "caption": "Duration (in minutes):" },
+		{ "type": "CheckBox", "name": "ExecScript", "caption": "Simultaneous execution of a script." },
+		{ "type": "SelectScript", "name": "ScriptVariable", "caption": "Script:" },
+		{ "type": "CheckBox", "name": "OnlyScript", "caption": "Execute only the script - no state switch!" }
 	]
 }

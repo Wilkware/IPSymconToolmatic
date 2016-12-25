@@ -2,7 +2,10 @@
 	"translations": {
 		"de": { 
 			"State Variable": "Statusvariable",
-			"Duration (in minutes)": "Dauer (in Minuten)"
+			"Duration (in minutes)": "Dauer (in Minuten)",
+			"Simultaneous execution of a script.": "Gleichzeitiges Ausführen eines Scriptes.",
+			"Script:": "Script:",
+			"Execute only the script - no state switch!": "Nur Script ausführen - kein Ausschaltvorgang!"
 		}
 	}
 }
