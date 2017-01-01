@@ -33,28 +33,31 @@ class LightAutomat extends IPSModule
   
   /**
    * Interne Funktion des SDK.
+   * Data[0] = neuer Wert
+   * Data[1] = Wert wurde geaändert?
    *
    * @access public
    */
   public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
   {
-    $this->SendDebug('Message:SenderID', $SenderID, 0);
-    $this->SendDebug('Message:Message', $Message, 0);
+    //$this->SendDebug('Message:SenderID', $SenderID, 0);
+    //$this->SendDebug('Message:Message', $Message, 0);
     $this->SendDebug('Message:Data', $Data[0] . " : " . $Data[1], 0);
 
     switch ($Message)
     {
       case 10603 /*VM_UPDATE*/:
         if ($SenderID != $this->ReadPropertyInteger("StateVariable")) {
+          $this->SendDebug('Message:SenderID', $SenderID . " unbekannt!", 0);
           break;
         }
         
-        if ($Data[1] == true) {
+        if ($Data[0] == true) {
           // Minutenberechnung = 1000ms * 1min(60s) * Duration
           $this->SetTimerInterval("TriggerTimer", 1000 * 60 * $this->ReadPropertyInteger("Duration"));
         }
         else {
-          // Licht wurde schon manuell ausgeschaltet
+          // Licht(Aktor) wurde schon manuell (aus)geschaltet
           $this->SetTimerInterval("TriggerTimer", 0);
         }
       break;
@@ -80,20 +83,20 @@ class LightAutomat extends IPSModule
         // WFC_PushNotification(xxxxx , 'Licht', '...wurde ausgeschalten!', '', 0);
       }    
       
-      if($this->ReadPropertyBoolean("ExecScript") == true) {
-      
-        if ($this->ReadPropertyInteger("ScriptVariable") <> 0)
-        {
-          if (IPS_ScriptExists($this->ReadPropertyInteger("ScriptVariable")))
-          {
+      if($this->ReadPropertyBoolean("ExecScript") == true) {     
+        if ($this->ReadPropertyInteger("ScriptVariable") <> 0) {
+          if (IPS_ScriptExists($this->ReadPropertyInteger("ScriptVariable"))) {
               $sr = IPS_RunScriptEx($this->ReadPropertyInteger("ScriptVariable"));
               $this->SendDebug('Script Execute: Return Value', $rs, 0);
           }
         }
+        else {
+          $this->SendDebug("TLA_Trigger", "Script #" . $this->ReadPropertyInteger('ScriptVariable') . " existiert nicht!",0);
+        }
       }
-      else {
-        $this->SendDebug("TLA_Trigger", "Script #" . $this->ReadPropertyInteger('ScriptVariable') . " existiert nicht!",0);
-      }
+    }
+    else {
+      $this->SendDebug('TLA_Trigger', "STATE schon FALSE - Timer löschen!" , 0);
     }        
     $this->SetTimerInterval("TriggerTimer", 0);
   }
