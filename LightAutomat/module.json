@@ -1,16 +1,16 @@
 {
-	"id": "{7F7BE9E1-FD90-4BF5-89C0-4EEB431F22F9}",
-	"name": "LightAutomat",
-	"type": 3,
-	"vendor": "",
-	"aliases": 
-	[
+  "id": "{7F7BE9E1-FD90-4BF5-89C0-4EEB431F22F9}",
+  "name": "LightAutomat",
+  "type": 3,
+  "vendor": "",
+  "aliases": 
+  [
     "Lichtautomat",
-		"Treppenautomat",
+    "Treppenautomat",
     "Tasterschaltung"
-	],
-	"parentRequirements": [],
-	"childRequirements": [],
-	"implemented": [],
-	"prefix": "TLA"
+  ],
+  "parentRequirements": [],
+  "childRequirements": [],
+  "implemented": [],
+  "prefix": "TLA"
 }

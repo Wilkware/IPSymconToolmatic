@@ -17,6 +17,7 @@
 * Bei Variablenänderung der Statusvariable (STATE)) wird ein Timer gestartet.
 * Nach eingestellter Zeit wird der Staus wieder zurückgestellt ("STATE" = flase).
 * Sollte das Licht schon vorher manuell aus geschalten worden sein, wird der Timer deaktiviert.
+* Zusätzlich bzw. ausschließlich kann ein Script ausgeführt werden. 
 
 ### 2. Voraussetzungen
 
@@ -35,8 +36,11 @@ __Konfigurationsseite__:
 
 Name               | Beschreibung
 ------------------ | ---------------------------------
-Statusvariable     | Quellvariable, über welche der Automat getriggert wird.  Meistens im Kanal 1 von HomeMatic Geräten zu finden und ist vom Typ boolean  und hat den Namen "STATE" (z.B: wenn man die Geräte mit dem HomeMatic Configurator anlegen lässt.).
-Dauer              | Zeit, bis das Licht(Aktor) wieder ausgeschaltet werden soll.
+StateVariable      | Quellvariable, über welche der Automat getriggert wird.  Meistens im Kanal 1 von HomeMatic Geräten zu finden und ist vom Typ boolean  und hat den Namen "STATE" (z.B: wenn man die Geräte mit dem HomeMatic Configurator anlegen lässt.).
+Duration           | Zeit, bis das Licht(Aktor) wieder ausgeschaltet werden soll.
+ExecScript         | Schalter, ob zusätzlich ein Script ausgeführt werden soll (IPS_ExecScript).
+ScriptVariable     | Script(auswahl), welches zum Einsatz kommen soll.
+OnlyScript         | Schalter, ob nur das Script ausgeführt werden soll, kein Schaltvorgang.
 
 
 ### 5. Statusvariablen und Profile
@@ -45,7 +49,6 @@ Die Statusvariablen/Timer werden automatisch angelegt. Das Löschen einzelner ka
 
 Name               | Typ       | Beschreibung
 ------------------ | --------- | ----------------
-TriggerEvent       | Timer     | Event Trigger, welcher bei Veränderung des Zustandes (Schaltvorgang) ausgelöst wird.
 TriggerTimer       | Timer     | Timmer zum auslösen der AUS-Schaltung nach vordefinierter Zeit.
 
 Es werden keine zusätzlichen Profile benötigt.
@@ -55,13 +58,6 @@ Es werden keine zusätzlichen Profile benötigt.
 Es ist keine weitere Steuerung oder gesonderte Darstellung integriert.
 
 ### 7. PHP-Befehlsreferenz
-
-`void LTA_Activate(int $InstanzID, boolean $Value);`  
-Aktiviert (true) oder deaktiviert (false) den Timer mit der InstanzID $InstanzID.  
-Die Funktion liefert keinerlei Rückgabewert.  
-
-Beispiel:  
-`LTA_Activate(12345, true);`  
 
 `void LTA_Trigger(int $InstanzID);`  
 Schaltet das Licht (den Actor) aus.  
