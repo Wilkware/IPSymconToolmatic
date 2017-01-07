@@ -57,7 +57,7 @@ class LightAutomat extends IPSModule
           break;
         }
         // Dauerbetrieb, tue nix!
-        $pid = $this->ReadPropertyInteger("StateVariable");
+        $pid = $this->ReadPropertyInteger("PermanentVariable");
         if ($pid != 0 && GetValue($pid)) {
           $this->SendDebug('MessageSink', "Dauerbetrieb ist angeschalten!", 0);
           break;
