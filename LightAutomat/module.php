@@ -80,13 +80,14 @@ class LightAutomat extends IPSModule
   *
   * TLA_Trigger($id);
   *
+  * @access public
   */
   public function Trigger()
   {
     if (GetValue($this->ReadPropertyInteger("StateVariable")) == true) {
 
       if($this->ReadPropertyBoolean("OnlyScript") == false ) {
-        $mid = IPS_GetParent($this->ReadPropertyInteger("MotionVariable"));
+        $mid = $this->ReadPropertyInteger("MotionVariable");
         if($mid != 0 && GetValue($mid)) {
           $this->SendDebug('TLA_Trigger', "Bewegungsmelder aktiv, also nochmal!" , 0);
           return;
@@ -123,6 +124,8 @@ class LightAutomat extends IPSModule
   *
   * TLA_Duration($id, $duration);
   *
+  * @access public
+  * @param  bool $duration Wartezeit einstellen.
   */
   public function Duration($duration)
   {
