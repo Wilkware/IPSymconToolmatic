@@ -18,9 +18,9 @@
 * Nach eingestellter Zeit wird der Staus wieder zurückgestellt ("STATE" = flase).
 * Sollte das Licht schon vorher manuell aus geschalten worden sein, wird der Timer deaktiviert.
 * Zusätzlich bzw. ausschließlich kann ein Script ausgeführt werden. 
-* NEU: Dauerbetrieb miitels hinterlegter boolean Variable, wenn true wird kein Timer gestartet.
-* NEU: Modul mit Bewegungsmelder, wenn dieser aktiv ist wird der Timer immer wieder erneuert.
-* NEU: Über die Funktion TLA_Duration(id, minuten) kann die Wartezeit via Script (WebFront) gesetzt werden.
+* _NEU_: Dauerbetrieb mittels hinterlegter boolean Variable, wenn **true** wird kein Timer gestartet.
+* _NEU_: Modul mit Bewegungsmelder, wenn dieser aktiv ist wird der Timer immer wieder erneuert.
+* _NEU_: Über die Funktion _TLA_Duration(id, minuten)_ kann die Wartezeit via Script (WebFront) gesetzt werden.
 
 ### 2. Voraussetzungen
 
@@ -60,8 +60,8 @@ Es werden keine zusätzlichen Profile benötigt.
 
 ### 6. WebFront
 
-Es ist keine weitere Steuerung oder gesonderte Darstellung integriert.
-Der Dauerbetrieb kann über einen einfachen Switch im WF realsiert werden.
+Es ist keine weitere Steuerung oder gesonderte Darstellung integriert.  
+Der Dauerbetrieb kann über einen einfachen Switch im WF realsiert werden.  
 Die Wartezeit kann auch über ein Textfeld oder Variablenprofil und Script gesteuert (TLA_Duration) werden.
 
 ### 7. PHP-Befehlsreferenz
@@ -73,10 +73,10 @@ Die Funktion liefert keinerlei Rückgabewert.
 Beispiel:  
 `LTA_Trigger(12345);`  
 
-`void LTA_Duration(int $InstanzID, int x);`
-Setzt die Wartezeit (Timer) auf die neuen 'x' Minuten.
+`void LTA_Duration(int $InstanzID, int x);`  
+Setzt die Wartezeit (Timer) auf die neuen 'x' Minuten.  
 Die Funktion liefert keinerlei Rückgabewert.
 
-Beispiel:
-`LTA_Duration(12345, 10);`
+Beispiel:  
+`LTA_Duration(12345, 10);`  
 Setzt die Wartezeit auf 10 Minuten.
