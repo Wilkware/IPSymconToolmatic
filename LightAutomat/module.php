@@ -18,6 +18,7 @@ class LightAutomat extends IPSModule
     $this->RegisterPropertyInteger("PermanentVariable", 0);
     $this->RegisterPropertyBoolean("ExecScript", false);
     $this->RegisterPropertyInteger("ScriptVariable", 0);
+    $this->RegisterPropertyBoolean("OnlyBool", false);
     $this->RegisterPropertyBoolean("OnlyScript", false);
     $this->RegisterTimer("TriggerTimer",0,"TLA_Trigger(\$_IPS['TARGET']);");
   }
@@ -84,7 +85,8 @@ class LightAutomat extends IPSModule
   */
   public function Trigger()
   {
-    if (GetValue($this->ReadPropertyInteger("StateVariable")) == true) {
+    $sv = GetValue($this->ReadPropertyInteger("StateVariable"));
+    if ($sv == true) {
 
       if($this->ReadPropertyBoolean("OnlyScript") == false ) {
         $mid = $this->ReadPropertyInteger("MotionVariable");
@@ -93,9 +95,14 @@ class LightAutomat extends IPSModule
           return;
         }
         else {
-          $pid = IPS_GetParent($this->ReadPropertyInteger("StateVariable"));
-          HM_WriteValueBoolean($pid, "STATE", false); //Gerät ausschalten
-          $this->SendDebug('TLA_Trigger', "STATE von #" . $pid . " auf false geschalten!" , 0);
+          if($this->ReadPropertyBoolean("OnlyBool") == true) {
+            $pid = IPS_GetParent($sv);          
+            HM_WriteValueBoolean($pid, "STATE", false); //Gerät ausschalten
+          }
+          else {
+            SetValue($sv, false);
+          }
+          //$this->SendDebug('TLA_Trigger', "STATE von #" . $pid . " auf false geschalten!" , 0);
           // WFC_PushNotification(xxxxx , 'Licht', '...wurde ausgeschalten!', '', 0);
         }
       }    

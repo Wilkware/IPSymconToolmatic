@@ -18,9 +18,10 @@
 * Nach eingestellter Zeit wird der Staus wieder zurückgestellt ("STATE" = flase).
 * Sollte das Licht schon vorher manuell aus geschalten worden sein, wird der Timer deaktiviert.
 * Zusätzlich bzw. ausschließlich kann ein Script ausgeführt werden. 
-* _NEU_: Dauerbetrieb mittels hinterlegter boolean Variable, wenn **true** wird kein Timer gestartet.
-* _NEU_: Modul mit Bewegungsmelder, wenn dieser aktiv ist wird der Timer immer wieder erneuert.
-* _NEU_: Über die Funktion _TLA_Duration(id, minuten)_ kann die Wartezeit via Script (WebFront) gesetzt werden.
+* Dauerbetrieb mittels hinterlegter boolean Variable, wenn **true** wird kein Timer gestartet.
+* Modul mit Bewegungsmelder, wenn dieser aktiv ist wird der Timer immer wieder erneuert.
+* Über die Funktion _TLA_Duration(id, minuten)_ kann die Wartezeit via Script (WebFront) gesetzt werden.
+* _NEU_: Statusvariable muss nicht von einer HM-Instanze sein, kann auch einfach eine boolsche Variable sein.
 
 ### 2. Voraussetzungen
 
@@ -46,6 +47,7 @@ PermanentVariable  | Statusvariable, über welchen der Automat zeitweise deaktiv
 ExecScript         | Schalter, ob zusätzlich ein Script ausgeführt werden soll (IPS_ExecScript).
 ScriptVariable     | Script(auswahl), welches zum Einsatz kommen soll.
 OnlyScript         | Schalter, ob nur das Script ausgeführt werden soll, kein Schaltvorgang.
+OnlyBool           | Schalter, ob die Statusvariable über HM-Befehl geschaltet werden soll oder einfach ein nur einfacher boolscher Switch gemacht werden soll.
 
 
 ### 5. Statusvariablen und Profile
