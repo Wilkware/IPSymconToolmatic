@@ -76,11 +76,11 @@ class PresenceDetector extends IPSModule
     if ($this->ReadPropertyInteger("BrightnessVariable") <> 0) {
       $bv = GetValue($this->ReadPropertyInteger("BrightnessVariable"));
       $tv = $this->ReadPropertyInteger("ThresholdValue");
-      if ($tv != 0 && $bv < $tv) {
-        $this->SendDebug('SwitchState', 'Schwellwert nicht erreicht:' . $bv  . '(Soll = ' . $tv . ')', 0);
+      if ($tv != 0 && $bv > $tv) {
+        $this->SendDebug('SwitchState', 'Oberhalb Schwellwert: ' . $bv  . '(Schwellwert: ' . $tv . ')', 0);
         return; // nix zu tun
       }
-      $this->SendDebug('SwitchState', 'Schwellwert erreicht:' . $bv  . '(Soll = ' . $tv . ')', 0);
+      $this->SendDebug('SwitchState', 'Immer oder unterhalb Schwellwert:' . $bv  . '(Schwellwert: ' . $tv . ')', 0);
     }
     // Variable schalten          
     if ($this->ReadPropertyInteger("SwitchVariable") <> 0) {
