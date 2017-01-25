@@ -45,7 +45,6 @@ class PresenceDetector extends IPSModule
    */
   public function MessageSink($timeStamp, $senderID, $message, $data)
   {
-    $this->SendDebug('MessageSink', 'Time: '. $timeStamp . ' data[0]:' . var_export($data[0]) . ', data[1]:' . var_export($data[1]) . ' ,data[2]:' . var_export($data[2]), 0);
     $this->SendDebug('MessageSink', 'Time: '. $timeStamp . ' data[0]:' . $data[0] . ', data[1]:' . $data[1] . ' ,data[2]:' . $data[2], 0);
 
     switch ($message)
@@ -81,6 +80,7 @@ class PresenceDetector extends IPSModule
         $this->SendDebug('SwitchState', 'Schwellwert nicht erreicht:' . $bv  . '(Soll = ' . $tv . ')', 0);
         return; // nix zu tun
       }
+      $this->SendDebug('SwitchState', 'Schwellwert erreicht:' . $bv  . '(Soll = ' . $tv . ')', 0);
     }
     // Variable schalten          
     if ($this->ReadPropertyInteger("SwitchVariable") <> 0) {
@@ -98,7 +98,7 @@ class PresenceDetector extends IPSModule
     if ($this->ReadPropertyInteger("ScriptVariable") <> 0) {
       if (IPS_ScriptExists($this->ReadPropertyInteger("ScriptVariable"))) {
         $sr = IPS_RunScript($this->ReadPropertyInteger("ScriptVariable"));
-        $this->SendDebug('SwitchState', 'Script Return Value: '. var_export($rs), 0);
+        $this->SendDebug('SwitchState', 'Script Return Value: '. $rs, 0);
       }
     }
   }
