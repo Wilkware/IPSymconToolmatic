@@ -68,17 +68,17 @@ Die Wartezeit kann auch über ein Textfeld oder Variablenprofil und Script geste
 
 ### 7. PHP-Befehlsreferenz
 
-`void LTA_Trigger(int $InstanzID);`  
+`void TLA_Trigger(int $InstanzID);`  
 Schaltet das Licht (den Actor) aus.  
 Die Funktion liefert keinerlei Rückgabewert.  
 
 Beispiel:  
-`LTA_Trigger(12345);`  
+`TLA_Trigger(12345);`  
 
-`void LTA_Duration(int $InstanzID, int x);`  
+`void TLA_Duration(int $InstanzID, int x);`  
 Setzt die Wartezeit (Timer) auf die neuen 'x' Minuten.  
 Die Funktion liefert keinerlei Rückgabewert.
 
 Beispiel:  
-`LTA_Duration(12345, 10);`  
+`TLA_Duration(12345, 10);`  
 Setzt die Wartezeit auf 10 Minuten.

@@ -28,6 +28,7 @@ class LightAutomat extends IPSModule
     if($this->ReadPropertyInteger("StateVariable") != 0) {
       $this->UnregisterMessage($this->ReadPropertyInteger("StateVariable"), VM_UPDATE);
     }
+    
     //Never delete this line!
     parent::ApplyChanges();
     
@@ -46,8 +47,6 @@ class LightAutomat extends IPSModule
    */
   public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
   {
-    //$this->SendDebug('Message:SenderID', $SenderID, 0);
-    //$this->SendDebug('Message:Message', $Message, 0);
     $this->SendDebug('Message:Data', $Data[0] . " : " . $Data[1], 0);
 
     switch ($Message)
@@ -68,6 +67,7 @@ class LightAutomat extends IPSModule
           $this->SetTimerInterval("TriggerTimer", 1000 * 60 * $this->ReadPropertyInteger("Duration"));
         }
         else {
+          $this->SendDebug('MessageSink', "Licht(Aktor) wurde aus geschaltet!", 0);
           // Licht(Aktor) wurde schon manuell (aus)geschaltet
           $this->SetTimerInterval("TriggerTimer", 0);
         }
@@ -86,8 +86,7 @@ class LightAutomat extends IPSModule
   public function Trigger()
   {
     $sv = $this->ReadPropertyInteger("StateVariable");
-    if (GetValue($sv) == true) {
-
+    if (GetValueBoolean($sv) == true) {
       if($this->ReadPropertyBoolean("OnlyScript") == false ) {
         $mid = $this->ReadPropertyInteger("MotionVariable");
         if($mid != 0 && GetValue($mid)) {
@@ -96,17 +95,17 @@ class LightAutomat extends IPSModule
         }
         else {
           if($this->ReadPropertyBoolean("OnlyBool") == true) {
-            SetValue($sv, false);
+            SetValueBoolean($sv, false);
           }
           else {
             $pid = IPS_GetParent($sv);          
             HM_WriteValueBoolean($pid, "STATE", false); //Gerät ausschalten
           }
-          //$this->SendDebug('TLA_Trigger', "STATE von #" . $pid . " auf false geschalten!" , 0);
+          $this->SendDebug('TLA_Trigger', "StateVariable (#" . $sv . ") auf false geschalten!" , 0);
           // WFC_PushNotification(xxxxx , 'Licht', '...wurde ausgeschalten!', '', 0);
         }
       }    
-      
+      // Script ausführen
       if($this->ReadPropertyBoolean("ExecScript") == true) {     
         if ($this->ReadPropertyInteger("ScriptVariable") <> 0) {
           if (IPS_ScriptExists($this->ReadPropertyInteger("ScriptVariable"))) {
