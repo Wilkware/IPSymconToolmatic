@@ -82,17 +82,16 @@ class PresenceDetector extends IPSModule
     }
     // Variable schalten          
     if ($this->ReadPropertyInteger("SwitchVariable") <> 0) {
-        $sv = $this->ReadPropertyInteger("SwitchVariable");
-        if($this->ReadPropertyBoolean("OnlyBool") == true) {
-          SetValueBoolean($sv, true);
-        }
-        else {
-          $pid = IPS_GetParent($sv);          
-          HM_WriteValueBoolean($pid, "STATE", true); //Gerät einschalten
-        }
-        $this->SendDebug('SwitchState', "Variable (#" . $sv . ") auf true geschalten!" , 0);
+      $sv = $this->ReadPropertyInteger("SwitchVariable");
+      if($this->ReadPropertyBoolean("OnlyBool") == true) {
+        SetValueBoolean($sv, true);
       }
-    }    
+      else {
+        $pid = IPS_GetParent($sv);          
+        HM_WriteValueBoolean($pid, "STATE", true); //Gerät einschalten
+      }
+      $this->SendDebug('SwitchState', "Variable (#" . $sv . ") auf true geschalten!" , 0);
+    }
     // Script ausführen
     if ($this->ReadPropertyInteger("ScriptVariable") <> 0) {
       if (IPS_ScriptExists($this->ReadPropertyInteger("ScriptVariable"))) {
@@ -112,7 +111,7 @@ class PresenceDetector extends IPSModule
   * @param  bool $threshold Helligkeitsschwellwert ab welchem geschalten werden soll.
   * @return bool true if successful, otherwise false.
   */
-  public function SetThreshold($threshold)
+  public function SetThreshold(integer $threshold)
   {
     if ((($threshold % 5) == 0) && $threshold >= 0 && $threshold <= 50 || $threshold = 75 || $threshold = 100)  {
       IPS_SetProperty($this->InstanceID, "ThresholdValue", $threshold);
