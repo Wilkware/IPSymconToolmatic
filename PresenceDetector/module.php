@@ -111,7 +111,7 @@ class PresenceDetector extends IPSModule
   * @param  bool $threshold Helligkeitsschwellwert ab welchem geschalten werden soll.
   * @return bool true if successful, otherwise false.
   */
-  public function SetThreshold(integer $threshold)
+  public function SetThreshold(int $threshold)
   {
     if ((($threshold % 5) == 0) && $threshold >= 0 && $threshold <= 50 || $threshold = 75 || $threshold = 100)  {
       IPS_SetProperty($this->InstanceID, "ThresholdValue", $threshold);

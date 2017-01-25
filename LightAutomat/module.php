@@ -133,7 +133,7 @@ class LightAutomat extends IPSModule
   * @access public
   * @param  integer $duration Wartezeit einstellen.
   */
-  public function Duration(integer $duration)
+  public function Duration(int $duration)
   {
       IPS_SetProperty($this->InstanceID, "Duration", $duration);
       IPS_ApplyChanges($this->InstanceID);

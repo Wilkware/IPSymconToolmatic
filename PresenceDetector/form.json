@@ -16,7 +16,7 @@
             { "label": "40 lx", "value": 40 },
             { "label": "45 lx", "value": 45 },
             { "label": "50 lx", "value": 50 },
-            { "label": "75 lx", "value": 75 }
+            { "label": "75 lx", "value": 75 },
             { "label": "100 lx", "value": 100 }
         ]
     },
