@@ -6,7 +6,7 @@
 			"Threshold Value:": "Schwellwert:",
 			"Switch Variable:": "Schaltvariable:",
 			"Script:": "Script:",
-      "Advanced settings:", "Erweiterte Einstellungen:",
+      "Advanced settings:": "Erweiterte Einstellungen:",
       "State variable is only a simple boolean!": "Statusvariable ist eine boolsche Variable, keine HomeMatic State Variable!"
 		}
 	}
