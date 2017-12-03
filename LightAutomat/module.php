@@ -47,7 +47,7 @@ class LightAutomat extends IPSModule
    */
   public function MessageSink($timeStamp, $senderID, $message, $data)
   {
-    $this->SendDebug('MessageSink', 'SenderId: '. $senderID . 'Data: ' . print_r($data, true), 0);
+    // $this->SendDebug('MessageSink', 'SenderId: '. $senderID . ' Data: ' . print_r($data, true), 0);
 
     switch ($message)
     {
