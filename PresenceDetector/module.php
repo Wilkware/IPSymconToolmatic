@@ -45,19 +45,27 @@ class PresenceDetector extends IPSModule
    */
   public function MessageSink($timeStamp, $senderID, $message, $data)
   {
-    $this->SendDebug('MessageSink', 'Time: '. $timeStamp . ', data[0]:' . $data[0] . ', data[1]:' . $data[1] . ' ,data[2]:' . $data[2], 0);
+    $this->SendDebug('MessageSink', 'SenderId: '. $senderID . 'Data: ' . print_r($data, true), 0);
 
     switch ($message)
     {
       case VM_UPDATE:
         if ($senderID != $this->ReadPropertyInteger("MotionVariable")) {
+          // Safety Check
           $this->SendDebug('MessageSink', $senderID . " unbekannt!", 0);
           break;
         }
-        if ($data[0] == true && $data[1] == true) { // OnChange auf TRUE
-          $this->SendDebug('MessageSink', 'call SwitchState()', 0);
+        if ($data[0] == true && $data[1] == true) { // OnChange auf TRUE, d.h. Bewegung erkannt
+          $this->SendDebug('MessageSink', 'OnChange auf TRUE - Bewegung erkannt', 0);
           $this->SwitchState();
         }
+        else if ($data[0] == false && $data[1] == true) { // OnChange auf FALSE, d.h. keine Bewegung
+          $this->SendDebug('MessageSink', 'OnChange auf FALSE - keine Bewegung', 0);
+        }
+        else { // OnChange auf FALSE, d.h. keine Bewegung
+          $this->SendDebug('MessageSink', 'OnChange unveraendert - keine Zustandsaenderung', 0);
+        }
+        
       break;
     }
   }   
@@ -80,7 +88,7 @@ class PresenceDetector extends IPSModule
         $this->SendDebug('SwitchState', 'Oberhalb Schwellwert: ' . $bv  . '(Schwellwert: ' . $tv . ')', 0);
         return; // nix zu tun
       }
-      $this->SendDebug('SwitchState', 'Immer oder unterhalb Schwellwert:' . $bv  . '(Schwellwert: ' . $tv . ')', 0);
+      $this->SendDebug('SwitchState', 'Immer oder unterhalb Schwellwert: ' . $bv  . ' (Schwellwert: ' . $tv . ')', 0);
     }
     // Variable schalten          
     if ($this->ReadPropertyInteger("SwitchVariable") <> 0) {

@@ -45,15 +45,16 @@ class LightAutomat extends IPSModule
    *
    * @access public
    */
-  public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
+  public function MessageSink($timeStamp, $senderID, $message, $data)
   {
-    $this->SendDebug('Message:Data', $Data[0] . " : " . $Data[1], 0);
+    $this->SendDebug('MessageSink', 'SenderId: '. $senderID . 'Data: ' . print_r($data, true), 0);
 
-    switch ($Message)
+    switch ($message)
     {
       case VM_UPDATE:
-        if ($SenderID != $this->ReadPropertyInteger("StateVariable")) {
-          $this->SendDebug('Message:SenderID', $SenderID . " unbekannt!", 0);
+        // Safty Check
+        if ($senderID != $this->ReadPropertyInteger("StateVariable")) {
+          $this->SendDebug('MessageSink', 'SenderID: ' . $senderID . " unbekannt!", 0);
           break;
         }
         // Dauerbetrieb, tue nix!
@@ -62,14 +63,17 @@ class LightAutomat extends IPSModule
           $this->SendDebug('MessageSink', "Dauerbetrieb ist angeschalten!", 0);
           break;
         }
-        if ($Data[0] == true) {
-          // Minutenberechnung = 1000ms * 1min(60s) * Duration
+        
+        if ($data[0] == true && $data[1] == true) { // OnChange auf TRUE, d.h. Angeschalten
+          $this->SendDebug('MessageSink', 'OnChange auf TRUE - Angeschalten', 0);
           $this->SetTimerInterval("TriggerTimer", 1000 * 60 * $this->ReadPropertyInteger("Duration"));
         }
-        else {
-          $this->SendDebug('MessageSink', "Licht(Aktor) wurde aus geschaltet!", 0);
-          // Licht(Aktor) wurde schon manuell (aus)geschaltet
+        else if ($data[0] == false && $data[1] == true) { // OnChange auf FALSE, d.h. Ausgeschalten
+          $this->SendDebug('MessageSink', 'OnChange auf FALSE - Ausgeschalten', 0);
           $this->SetTimerInterval("TriggerTimer", 0);
+        }
+        else { // OnChange - keine Zustandsaenderung
+          $this->SendDebug('MessageSink', 'OnChange unveraendert - keine Zustandsaenderung', 0);
         }
       break;
     }
