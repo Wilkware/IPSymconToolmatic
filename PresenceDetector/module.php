@@ -1,9 +1,15 @@
 <?
+// --- BASE MESSAGE
+if(!defined("IPS_BASE")) {
+  define("IPS_BASE", 10000);
+}
+// --- VARIABLE MANAGER
+if (!defined("IPS_VARIABLEMESSAGE")) {
+  define("IPS_VARIABLEMESSAGE", IPS_BASE + 600);
+  define("VM_UPDATE", IPS_VARIABLEMESSAGE + 3);
+}
 
-define("IPS_BASE", 10000);
-define("IPS_VARIABLEMESSAGE", IPS_BASE + 600);
-define("VM_UPDATE", IPS_VARIABLEMESSAGE + 3);
-
+// CLASS PresenceDetector
 class PresenceDetector extends IPSModule
 {
   
@@ -37,9 +43,10 @@ class PresenceDetector extends IPSModule
   
   /**
    * Interne Funktion des SDK.
-   * Data[0] = neuer Wert
-   * Data[1] = Wert wurde geändert?
-   * Data[2] = alter Wert
+   * data[0] = neuer Wert
+   * data[1] = wurde Wert geändert?
+   * data[2] = alter Wert
+   * data[3] = Timestamp
    *
    * @access public
    */
