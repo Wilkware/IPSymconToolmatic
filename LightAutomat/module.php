@@ -121,7 +121,7 @@ class LightAutomat extends IPSModule
       if($this->ReadPropertyBoolean("ExecScript") == true) {     
         if ($this->ReadPropertyInteger("ScriptVariable") <> 0) {
           if (IPS_ScriptExists($this->ReadPropertyInteger("ScriptVariable"))) {
-              $sr = IPS_RunScript($this->ReadPropertyInteger("ScriptVariable"));
+              $rs = IPS_RunScript($this->ReadPropertyInteger("ScriptVariable"));
               $this->SendDebug('Script Execute: Return Value', $rs, 0);
           }
         }
