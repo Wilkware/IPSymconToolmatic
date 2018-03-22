@@ -111,7 +111,10 @@ class LightAutomat extends IPSModule
           }
           else {
             $pid = IPS_GetParent($sv);          
-            HM_WriteValueBoolean($pid, "STATE", false); //Gerät ausschalten
+            $ret = @HM_WriteValueBoolean($pid, "STATE", false); //Gerät ausschalten
+            if($ret === false) {
+              $this->SendDebug('TLA_Trigger', 'Gerät konnte nicht ausgeschalten werden (UNREACH)!', 0);
+            }
           }
           $this->SendDebug('TLA_Trigger', "StateVariable (#" . $sv . ") auf false geschalten!" , 0);
           // WFC_PushNotification(xxxxx , 'Licht', '...wurde ausgeschalten!', '', 0);

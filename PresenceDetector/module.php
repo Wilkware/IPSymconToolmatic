@@ -105,7 +105,10 @@ class PresenceDetector extends IPSModule
       }
       else {
         $pid = IPS_GetParent($sv);          
-        HM_WriteValueBoolean($pid, "STATE", true); //Gerät einschalten
+        $ret = @HM_WriteValueBoolean($pid, "STATE", true); //Gerät einschalten
+        if($ret === false) {
+          $this->SendDebug('SwitchState', 'Gerät konnte nicht eingeschalten werden (UNREACH)!', 0);
+        }
       }
       $this->SendDebug('SwitchState', "Variable (#" . $sv . ") auf true geschalten!" , 0);
     }
