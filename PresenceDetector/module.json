@@ -1,0 +1,15 @@
+{
+  "id": "{C8FA699E-F608-4988-BFE7-3EFE068F633F}",
+  "name": "PresenceDetector",
+  "type": 3,
+  "vendor": "",
+  "aliases": 
+  [
+    "Präsensmelder",
+    "Bewegungsmelder"
+  ],
+  "parentRequirements": [],
+  "childRequirements": [],
+  "implemented": [],
+  "prefix": "TPD"
+}
