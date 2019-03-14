@@ -185,8 +185,27 @@ class HumitidySensor extends IPSModule
             $result = 'Innen ist es '.round(($wcy - 100) * 100) / 100 .'% feuchter!';
             $hint = true;
         }
-        $this->SetValueString('Result', $result);
-        $this->SetValueBoolean('Hint', $hint);
+        $this->SetValue('Result', $result);
+        $this->SetValue('Hint', $hint);
+
+        $scriptId = $this->ReadPropertyInteger('ScriptMessage');
+        if ($scriptId != 0 && $hint == true) {
+            $room = $this->RegisterPropertyString('RoomName');
+            $time = $this->RegisterPropertyInteger('LifeTime');
+            $time = $time * 60;
+            if (IPS_ScriptExists($scriptId)) {
+                if ($time >0) {
+                    IPS_RunScriptWaitEx($scriptId , 
+                        array('action' => 'add', 'text' => 'Zimmer '.$room.' bitte lüften!', 'expires' => time() + $time,
+                            'removable' => true, 'type' => 3, 'image' => 'Ventilation')); 
+                } else {
+                    IPS_RunScriptWaitEx($scriptId , 
+                        array('action' => 'add', 'text' => 'Zimmer '.$room.' bitte lüften!',
+                            'removable' => true, 'type' => 3, 'image' => 'Ventilation')); 
+                }
+                
+            }
+        }
     }
 
     /**
