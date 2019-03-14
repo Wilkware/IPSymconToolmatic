@@ -196,11 +196,11 @@ class HumitidySensor extends IPSModule
             if (IPS_ScriptExists($scriptId)) {
                 if ($time > 0) {
                     IPS_RunScriptWaitEx($scriptId,
-                        ['action'       => 'add', 'text' => 'Zimmer '.$room.' bitte lüften!', 'expires' => time() + $time,
+                        ['action'       => 'add', 'text' => $room.' bitte lüften!', 'expires' => time() + $time,
                             'removable' => true, 'type' => 3, 'image' => 'Ventilation', ]);
                 } else {
                     IPS_RunScriptWaitEx($scriptId,
-                        ['action'       => 'add', 'text' => 'Zimmer '.$room.' bitte lüften!',
+                        ['action'       => 'add', 'text' => $room.' bitte lüften!',
                             'removable' => true, 'type' => 3, 'image' => 'Ventilation', ]);
                 }
             }
@@ -381,54 +381,6 @@ class HumitidySensor extends IPSModule
         //IPS_SetEventCyclic($id, 0, 0, 0, 0, 0, 0);
         IPS_SetEventCyclicTimeFrom($id, $hour, $minute, $second);
         IPS_SetEventActive($id, $active);
-    }
-
-    /**
-     * Update a boolean value.
-     *
-     * @param string $Ident Ident of the boolean variable
-     * @param bool   $value Value of the boolean variable
-     */
-    private function SetValueBoolean(string $ident, bool $value)
-    {
-        $id = $this->GetIDForIdent($ident);
-        SetValueBoolean($id, $value);
-    }
-
-    /**
-     * Update a string value.
-     *
-     * @param string $Ident Ident of the boolean variable
-     * @param string $value Value of the string variable
-     */
-    private function SetValueString(string $ident, string $value)
-    {
-        $id = $this->GetIDForIdent($ident);
-        SetValueString($id, $value);
-    }
-
-    /**
-     * Update a integer value.
-     *
-     * @param string $Ident Ident of the boolean variable
-     * @param int    $value Value of the string variable
-     */
-    private function SetValueInteger(string $ident, int $value)
-    {
-        $id = $this->GetIDForIdent($ident);
-        SetValueInteger($id, $value);
-    }
-
-    /**
-     * Update a float value.
-     *
-     * @param string $Ident Ident of the float variable
-     * @param float  $value Value of the float variable
-     */
-    private function SetValueFloat(string $ident, float $value)
-    {
-        $id = $this->GetIDForIdent($ident);
-        SetValueFloat($id, $value);
     }
 }
 
