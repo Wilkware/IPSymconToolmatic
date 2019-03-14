@@ -98,6 +98,31 @@ class HumitidySensor extends IPSModule
         IPS_ApplyChanges($this->InstanceID);
     }
 
+    /**
+     * Create the profile for the given associations.
+     */
+    protected function RegisterProfile($vartype, $name, $icon, $prefix = '', $suffix = '', $minvalue = 0, $maxvalue = 0, $stepsize = 0, $digits = 0, $associations = null)
+    {
+        if (!IPS_VariableProfileExists($name)) {
+            switch ($vartype) {
+                case IPSVarType::vtBoolean:
+                    $this->RegisterProfileBoolean($name, $icon, $prefix, $suffix, $associations);
+                    break;
+                case IPSVarType::vtInteger:
+                    $this->RegisterProfileInteger($name, $icon, $prefix, $suffix, $minvalue, $maxvalue, $stepsize, $digits, $associations);
+                    break;
+                case IPSVarType::vtFloat:
+                    $this->RegisterProfileFloat($name, $icon, $prefix, $suffix, $minvalue, $maxvalue, $stepsize, $digits, $associations);
+                    break;
+                case IPSVarType::vtString:
+                    $this->RegisterProfileString($name, $icon);
+                    break;
+            }
+        }
+
+        return $name;
+    }
+
     protected function RegisterProfileType($name, $type)
     {
         if (!IPS_VariableProfileExists($name)) {
