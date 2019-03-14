@@ -47,7 +47,7 @@ class LightAutomat extends IPSModule
   /**
    * Interne Funktion des SDK.
    * data[0] = neuer Wert
-   * data[1] = wurde Wert geändert?
+   * data[1] = wurde Wert geÃ¤ndert?
    * data[2] = alter Wert
    * data[3] = Timestamp
    *
@@ -111,16 +111,16 @@ class LightAutomat extends IPSModule
           }
           else {
             $pid = IPS_GetParent($sv);          
-            $ret = @HM_WriteValueBoolean($pid, "STATE", false); //Gerät ausschalten
+            $ret = @HM_WriteValueBoolean($pid, "STATE", false); //GerÃ¤t ausschalten
             if($ret === false) {
-              $this->SendDebug('TLA_Trigger', 'Gerät konnte nicht ausgeschalten werden (UNREACH)!', 0);
+              $this->SendDebug('TLA_Trigger', 'GerÃ¤t konnte nicht ausgeschalten werden (UNREACH)!', 0);
             }
           }
           $this->SendDebug('TLA_Trigger', "StateVariable (#" . $sv . ") auf false geschalten!" , 0);
           // WFC_PushNotification(xxxxx , 'Licht', '...wurde ausgeschalten!', '', 0);
         }
       }    
-      // Script ausführen
+      // Script ausfÃ¼hren
       if($this->ReadPropertyBoolean("ExecScript") == true) {     
         if ($this->ReadPropertyInteger("ScriptVariable") <> 0) {
           if (IPS_ScriptExists($this->ReadPropertyInteger("ScriptVariable"))) {
@@ -134,7 +134,7 @@ class LightAutomat extends IPSModule
       }
     }
     else {
-      $this->SendDebug('TLA_Trigger', "STATE schon FALSE - Timer löschen!" , 0);
+      $this->SendDebug('TLA_Trigger', "STATE schon FALSE - Timer lÃ¶schen!" , 0);
     }        
     $this->SetTimerInterval("TriggerTimer", 0);
   }

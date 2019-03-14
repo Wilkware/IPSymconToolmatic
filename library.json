@@ -1,12 +1,12 @@
 {
-	"id": "{F96AD408-75FF-4665-B1D2-F092B52FC994}",
-	"author": "Wilkware (@Pitti)",
-	"name": "Toolmatic",
-	"url": "https://github.com/Wilkware/IPSymconToolmatic",
-	"compatibility": {
+  "id": "{F96AD408-75FF-4665-B1D2-F092B52FC994}",
+  "author": "Wilkware (@Pitti)",
+  "name": "Toolmatic",
+  "url": "https://github.com/Wilkware",
+  "compatibility": {
         "version": "4.1",
     },
-	"version": "1.2",
-	"build": 20190224,
-	"date": 1551015643
+  "version": "4.0",
+  "build": 20190317,
+  "date": 1552780800
 }

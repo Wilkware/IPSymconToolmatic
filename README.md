@@ -1,21 +1,49 @@
-[![Version](https://img.shields.io/badge/Symcon-PHP--Modul-purple.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
-[![Version](https://img.shields.io/badge/Symcon%20Version-4.1%20%3E-blue.svg)](https://www.symcon.de/produkt/)
-[![Version](https://img.shields.io/badge/Modul%20Version-1.2.20190224-orange.svg)](https://github.com/Wilkware/IPSymconToolmatic)
-[![Version](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![Version](https://img.shields.io/badge/Symcon-PHP--Bibliothek-purple.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
+[![Product](https://img.shields.io/badge/Symcon%20Version-4.1%20%3E-blue.svg)](https://www.symcon.de/produkt/)
+[![Version](https://img.shields.io/badge/Modul%20Version-1.2.20190317-orange.svg)](https://github.com/Wilkware/IPSymconToolmatic)
+[![Licence](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![StyleCI](https://github.styleci.io/repos/76893952/shield?style=flat)](https://github.styleci.io/repos/76893952)
 
 # IPSymconToolmatic
 
-Dies ist eine kleine Tool-Sammlung f¸r die Steuerung von HomeMatic(HM & HmIP) Ger‰ten.
-Haupts‰chlich beinhaltet es sich um kleine Erweiterung zur Automatisierung von Aktoren 
-oder erleichtert das Steuern von Ge‰ten bzw. bietet mehr Komfort bei der Bedienung.
+Dies ist eine kleine Tool-Sammlung f√ºr die Steuerung von HomeMatic(HM & HmIP) Ger√§ten.
+Haupts√§chlich beinhaltet es sich um kleine Erweiterung zur Automatisierung von Aktoren 
+oder erleichtert das Steuern von Ge√§ten bzw. bietet mehr Komfort bei der Bedienung.
 
 Folgende Module beinhaltet das IP Symcon Toolmatic Repository:
 
 - __Lichtautomat__ ([Dokumentation](LightAutomat))  
 	Automatisches Ausschalten des Lichtes (oder Aktor) nach einer bestimmten Zeit.
 
-- __Pr‰sensmelder__ ([Dokumentation](PresenceDetector))  
-	Melden bzw. Schalten von Bewegungen in Abh‰ngigkeit der Helligkeit (falls Sensor vorhanden).
+- __Pr√§sensmelder__ ([Dokumentation](PresenceDetector))  
+	Melden bzw. Schalten von Bewegungen in Abh√§ngigkeit der Helligkeit (falls Sensor vorhanden).
 
 - __Rollladenaktor__ ([Dokumentation](ShutterActuator))  
 	Anfahren von vordefinierten Positionen mittels zeitlicher Vorgaben.
+
+- __Luftfeuchtigssensor__ ([Dokumentation](HumitidySensor))  
+	Lohnt sich das L√ºften? Berechnung von Wassergehalt und Taupunkt mit ensprechender Entscheidungsvorlage. 
+
+
+### Historie
+
+2016-12-20
+* _Modul_ Lichtautomat(LightAutomat)
+
+2017-01-01
+* _Modul_ Pr√§sensmelder(PresenceDetector)
+
+20197-03-17
+* _Modul_ Rollladenaktor(ShutterActuator)
+* _Modul_ Luftfeuchtigssensor(HumitidySensor)
+
+### Entwickler
+* Heiko Wilknitz ([@wilkware](https://github.com/wilkware))
+
+### Spenden
+Die Software ist f√ºr die nicht kommzerielle Nutzung kostenlos, Schenkungen als Unterst√ºtzung f√ºr den Entwickler bitte hier:<br />
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8816166" target="_blank"><img src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donate_LG.gif" border="0" /></a>
+
+### Lizenz
+[![Licence](https://licensebuttons.net/i/l/by-nc-sa/transparent/00/00/00/88x31-e.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+  
