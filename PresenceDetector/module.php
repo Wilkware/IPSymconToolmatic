@@ -44,32 +44,30 @@ class PresenceDetector extends IPSModule
     /**
      * Interne Funktion des SDK.
      * data[0] = neuer Wert
-     * data[1] = wurde Wert geändert?
+     * data[1] = wurde Wert geÃ¤ndert?
      * data[2] = alter Wert
      * data[3] = Timestamp.
      */
     public function MessageSink($timeStamp, $senderID, $message, $data)
     {
         // $this->SendDebug('MessageSink', 'SenderId: '. $senderID . 'Data: ' . print_r($data, true), 0);
-
         switch ($message) {
-      case VM_UPDATE:
-        if ($senderID != $this->ReadPropertyInteger('MotionVariable')) {
-            // Safety Check
-            $this->SendDebug('MessageSink', $senderID.' unbekannt!', 0);
+            case VM_UPDATE:
+                if ($senderID != $this->ReadPropertyInteger('MotionVariable')) {
+                    // Safety Check
+                    $this->SendDebug('MessageSink', $senderID.' unbekannt!', 0);
+                    break;
+                }
+                if ($data[0] == true && $data[1] == true) { // OnChange auf TRUE, d.h. Bewegung erkannt
+                    $this->SendDebug('MessageSink', 'OnChange auf TRUE - Bewegung erkannt', 0);
+                    $this->SwitchState();
+                } elseif ($data[0] == false && $data[1] == true) { // OnChange auf FALSE, d.h. keine Bewegung
+                    $this->SendDebug('MessageSink', 'OnChange auf FALSE - keine Bewegung', 0);
+                } else { // OnChange auf FALSE, d.h. keine Bewegung
+                    $this->SendDebug('MessageSink', 'OnChange unveraendert - keine Zustandsaenderung', 0);
+                }
             break;
         }
-        if ($data[0] == true && $data[1] == true) { // OnChange auf TRUE, d.h. Bewegung erkannt
-            $this->SendDebug('MessageSink', 'OnChange auf TRUE - Bewegung erkannt', 0);
-            $this->SwitchState();
-        } elseif ($data[0] == false && $data[1] == true) { // OnChange auf FALSE, d.h. keine Bewegung
-            $this->SendDebug('MessageSink', 'OnChange auf FALSE - keine Bewegung', 0);
-        } else { // OnChange auf FALSE, d.h. keine Bewegung
-            $this->SendDebug('MessageSink', 'OnChange unveraendert - keine Zustandsaenderung', 0);
-        }
-
-      break;
-    }
     }
 
     /**
@@ -98,14 +96,14 @@ class PresenceDetector extends IPSModule
                 SetValueBoolean($sv, true);
             } else {
                 $pid = IPS_GetParent($sv);
-                $ret = @HM_WriteValueBoolean($pid, 'STATE', true); //Gerät einschalten
+                $ret = @HM_WriteValueBoolean($pid, 'STATE', true); //GerÃ¤t einschalten
                 if ($ret === false) {
-                    $this->SendDebug('SwitchState', 'Gerät konnte nicht eingeschalten werden (UNREACH)!', 0);
+                    $this->SendDebug('SwitchState', 'GerÃ¤t konnte nicht eingeschalten werden (UNREACH)!', 0);
                 }
             }
             $this->SendDebug('SwitchState', 'Variable (#'.$sv.') auf true geschalten!', 0);
         }
-        // Script ausführen
+        // Script ausfÃ¼hren
         if ($this->ReadPropertyInteger('ScriptVariable') != 0) {
             if (IPS_ScriptExists($this->ReadPropertyInteger('ScriptVariable'))) {
                 $sr = IPS_RunScript($this->ReadPropertyInteger('ScriptVariable'));

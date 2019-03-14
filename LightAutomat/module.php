@@ -54,32 +54,31 @@ class LightAutomat extends IPSModule
     public function MessageSink($timeStamp, $senderID, $message, $data)
     {
         // $this->SendDebug('MessageSink', 'SenderId: '. $senderID . ' Data: ' . print_r($data, true), 0);
-
         switch ($message) {
-      case VM_UPDATE:
-        // Safty Check
-        if ($senderID != $this->ReadPropertyInteger('StateVariable')) {
-            $this->SendDebug('MessageSink', 'SenderID: '.$senderID.' unbekannt!', 0);
+            case VM_UPDATE:
+                // Safty Check
+                if ($senderID != $this->ReadPropertyInteger('StateVariable')) {
+                    $this->SendDebug('MessageSink', 'SenderID: '.$senderID.' unbekannt!', 0);
+                    break;
+                }
+                // Dauerbetrieb, tue nix!
+                $pid = $this->ReadPropertyInteger('PermanentVariable');
+                if ($pid != 0 && GetValue($pid)) {
+                    $this->SendDebug('MessageSink', 'Dauerbetrieb ist angeschalten!', 0);
+                    break;
+                }
+        
+                if ($data[0] == true && $data[1] == true) { // OnChange auf TRUE, d.h. Angeschalten
+                    $this->SendDebug('MessageSink', 'OnChange auf TRUE - Angeschalten', 0);
+                    $this->SetTimerInterval('TriggerTimer', 1000 * 60 * $this->ReadPropertyInteger('Duration'));
+                } elseif ($data[0] == false && $data[1] == true) { // OnChange auf FALSE, d.h. Ausgeschalten
+                    $this->SendDebug('MessageSink', 'OnChange auf FALSE - Ausgeschalten', 0);
+                    $this->SetTimerInterval('TriggerTimer', 0);
+                } else { // OnChange - keine Zustandsaenderung
+                    $this->SendDebug('MessageSink', 'OnChange unveraendert - keine Zustandsaenderung', 0);
+                }
             break;
-        }
-        // Dauerbetrieb, tue nix!
-        $pid = $this->ReadPropertyInteger('PermanentVariable');
-        if ($pid != 0 && GetValue($pid)) {
-            $this->SendDebug('MessageSink', 'Dauerbetrieb ist angeschalten!', 0);
-            break;
-        }
-
-        if ($data[0] == true && $data[1] == true) { // OnChange auf TRUE, d.h. Angeschalten
-            $this->SendDebug('MessageSink', 'OnChange auf TRUE - Angeschalten', 0);
-            $this->SetTimerInterval('TriggerTimer', 1000 * 60 * $this->ReadPropertyInteger('Duration'));
-        } elseif ($data[0] == false && $data[1] == true) { // OnChange auf FALSE, d.h. Ausgeschalten
-            $this->SendDebug('MessageSink', 'OnChange auf FALSE - Ausgeschalten', 0);
-            $this->SetTimerInterval('TriggerTimer', 0);
-        } else { // OnChange - keine Zustandsaenderung
-            $this->SendDebug('MessageSink', 'OnChange unveraendert - keine Zustandsaenderung', 0);
-        }
-      break;
-    }
+          }
     }
 
     /**
