@@ -26,7 +26,7 @@ class HumitidySensor extends IPSModule
         $this->RegisterPropertyInteger('HumyIndoor', 0);
         // Dashboard
         $this->RegisterPropertyInteger('ScriptMessage', 0);
-        $this->RegisterPropertyString('RoomName', "Unknown");
+        $this->RegisterPropertyString('RoomName', 'Unknown');
         $this->RegisterPropertyInteger('LifeTime', 0);
         // Settings
         $this->RegisterPropertyInteger('UpdateTimer', 15);
@@ -35,7 +35,6 @@ class HumitidySensor extends IPSModule
 
         // Update timer
         $this->RegisterCyclicTimer('UpdateTimer', 0, 15, 0, 'THS_Update('.$this->InstanceID.');', true);
-
     }
 
     public function ApplyChanges()
@@ -65,12 +64,12 @@ class HumitidySensor extends IPSModule
         $this->RegisterVariable(IPSVarType::vtString, 'Ergebnis', 'Result', '', 2, true);
 
         // Taupunkt
-        $create = $this->ReadPropertyBoolean('CreateDewPoint'); 
+        $create = $this->ReadPropertyBoolean('CreateDewPoint');
         $this->RegisterVariable(IPSVarType::vtFloat, 'Taupunkt Aussen', 'DewPointOutdoor', '~Temperature', 3, $create);
         $this->RegisterVariable(IPSVarType::vtFloat, 'Taupunkt Innen', 'DewPointIndoor', '~Temperature', 4, $create);
 
         // Wassergehalt (WaterContent)
-        $create = $this->ReadPropertyBoolean('CreateWaterContent'); 
+        $create = $this->ReadPropertyBoolean('CreateWaterContent');
         $this->RegisterVariable(IPSVarType::vtFloat, 'Wassergehalt Aussen', 'DewPointOutdoor', 'THS.WaterContent', 5, $create);
         $this->RegisterVariable(IPSVarType::vtFloat, 'Wassergehalt Innen', 'DewPointIndoor', 'THS.WaterContent', 6, $create);
     }
