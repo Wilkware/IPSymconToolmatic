@@ -32,8 +32,7 @@ class HumitidySensor extends IPSModule
         $this->RegisterPropertyInteger('UpdateTimer', 15);
         $this->RegisterPropertyBoolean('CreateDewPoint', true);
         $this->RegisterPropertyBoolean('CreateWaterContent', true);
-
-        // Update trigger
+       // Update trigger
         $this->RegisterTimer('UpdateTrigger', 0, "THS_Update(\$_IPS['TARGET']);");
     }
 
@@ -81,6 +80,113 @@ class HumitidySensor extends IPSModule
      */
     public function Update()
     {
+        $result = 'Ergebnis konnte nicht ermittelt werden!';
+        
+        // Daten lesen
+        $state = true;
+        // Temp Outdoor
+        $to = $this->RegisterPropertyInteger('TempOutdoor');
+        if ($to != 0) {
+            $to = GetValue($to);
+        } else {
+            $this->SendDebug('UPDATE', 'Temperature Outdoor not set!', 0);
+            $state  = false;
+        }
+        // Humidity Outddoor
+        $ho = $this->RegisterPropertyInteger('HumyOutdoor');
+        if ($ho != 0) {
+            $ho = GetValue($ho);
+        } else {
+            $this->SendDebug('UPDATE', 'Humidity Outdoor not set!', 0);
+            $state  = false;
+        }
+        // Temp indoor
+        $ti = $this->RegisterPropertyInteger('TempIndoor');
+        if ($ti != 0) {
+            $ti = GetValue($ti);
+        } else {
+            $this->SendDebug('UPDATE', 'Temperature Indoor not set!', 0);
+            $state  = false;
+        }
+        // Humidity Outddoor
+        $hi = $this->RegisterPropertyInteger('HumyIndoor');
+        if ($hi != 0) {
+            $hi = GetValue($hi);
+        } else {
+            $this->SendDebug('UPDATE', 'Humidity Indoor not set!', 0);
+            $state  = false;
+        }
+        // All okay
+        if ($state == false) {
+            $this->SetValueString('Result', $result);
+            
+            return;
+        }
+        
+        // Minus oder Plus ;-)
+        if ( $ti >=0 )  {
+            // Plustemperaturen
+            $ao = 7.5;
+            $bo = 237.7;
+            $ai = $ao;
+            $bi = $bo;
+        } else {
+            // Minustemperaturen
+            $ao = 7.6;
+            $bo = 240.7;
+            $ai = $ao;
+            $bi = $bo;
+        }
+
+        $rg = 8314.3;
+        $m  = 18.016;
+        $ko = $to + 273.15;
+        $ki = $ti + 273.15;
+
+        $so = 6.1078 * pow(10, (($ao * $to) / ($bo + $to)));
+        $si = 6.1078 * pow(10, (($ai * $ti) / ($bi + $ti)));
+
+        // DewPoint
+        $do = ($ho / 100) * $so;
+        $di = ($hi / 100) * $si;
+
+        $vo = log10($do / 6.1078);
+        $dpo = $bo * $vo / ($ao - $vo);
+
+        $vi = log10($di / 6.1078);
+        $dpi = $bi * $vi / ($ai - $vi);
+
+        $update = $this->ReadPropertyBoolean('CreateDewPoint');
+        if ($update == true) {
+            SetValue('DewPointOutdoor', $dpo);
+            SetValue('DewPointIndoor', $dpi);
+        }
+
+        // WaterContent
+        $wco = pow(10, 5) * $m / $rg * $do / $ko;
+        $wci = pow(10, 5) * $m / $rg * $di / $ki;
+
+        $update = $this->ReadPropertyBoolean('CreateWaterContent');
+        if ($update == true) {
+            SetValue('WaterContentOutdoor', $wco);
+            SetValue('WaterContentIndoor', $wci);
+        }
+        
+        // Result (diff out / in)
+        $wc = $wco - $wci;
+        $wcy = ($wci / $wco) * 100;
+        if ($wcy >=0) {
+            $result = round((100 - $wcy)*100)/100 . '% trockener! Draussen ist es feuchter!';
+            $hint    = false;
+        } else if ($wcy <=110) {
+            $result = 'Zwar ist es innen ' . round((100 - $wcy)*100)/100 . '% feuchter, aber es lohnt nicht zu lüften!'; 
+            $hint    = false;
+        } else {
+            $result = 'Innen ist es ' . round((100 - $wcy)*100)/100 . '% feuchter!';
+            $hint    = true;
+        }
+        SetValue('Result', $result);
+        SetValue('Hint', $hint);
     }
 
     /**
@@ -257,6 +363,42 @@ class HumitidySensor extends IPSModule
         //IPS_SetEventCyclic($id, 0, 0, 0, 0, 0, 0);
         IPS_SetEventCyclicTimeFrom($id, $hour, $minute, $second);
         IPS_SetEventActive($id, $active);
+    }
+
+    /**
+     * Update a boolean value.
+     *
+     * @param string $Ident Ident of the boolean variable
+     * @param bool   $value Value of the boolean variable
+     */
+    private function SetValueBoolean(string $ident, bool $value)
+    {
+        $id = $this->GetIDForIdent($ident);
+        SetValueBoolean($id, $value);
+    }
+
+    /**
+     * Update a string value.
+     *
+     * @param string $Ident Ident of the boolean variable
+     * @param string $value Value of the string variable
+     */
+    private function SetValueString(string $ident, string $value)
+    {
+        $id = $this->GetIDForIdent($ident);
+        SetValueString($id, $value);
+    }
+
+    /**
+     * Update a integer value.
+     *
+     * @param string $Ident Ident of the boolean variable
+     * @param int    $value Value of the string variable
+     */
+    private function SetValueInteger(string $ident, int $value)
+    {
+        $id = $this->GetIDForIdent($ident);
+        SetValueInteger($id, $value);
     }
 }
 
