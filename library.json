@@ -3,9 +3,6 @@
   "author": "Wilkware (@Pitti)",
   "name": "Toolmatic",
   "url": "https://github.com/Wilkware",
-  "compatibility": {
-        "version": "4.1",
-    },
   "version": "4.0",
   "build": 20190317,
   "date": 1552780800
