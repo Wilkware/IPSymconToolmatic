@@ -158,8 +158,8 @@ class HumitidySensor extends IPSModule
 
         $update = $this->ReadPropertyBoolean('CreateDewPoint');
         if ($update == true) {
-            SetValueFloat('DewPointOutdoor', $dpo);
-            SetValueFloat('DewPointIndoor', $dpi);
+            $this->SetValueFloat('DewPointOutdoor', $dpo);
+            $this->SetValueFloat('DewPointIndoor', $dpi);
         }
 
         // WaterContent
@@ -168,8 +168,8 @@ class HumitidySensor extends IPSModule
 
         $update = $this->ReadPropertyBoolean('CreateWaterContent');
         if ($update == true) {
-            SetValueFloat('WaterContentOutdoor', $wco);
-            SetValueFloat('WaterContentIndoor', $wci);
+            $this->SetValueFloat('WaterContentOutdoor', $wco);
+            $this->SetValueFloat('WaterContentIndoor', $wci);
         }
 
         // Result (diff out / in)
@@ -185,8 +185,8 @@ class HumitidySensor extends IPSModule
             $result = 'Innen ist es '.round((100 - $wcy) * 100) / 100 .'% feuchter!';
             $hint = true;
         }
-        SetValueString('Result', $result);
-        SetValueBoolean('Hint', $hint);
+        $this->SetValueString('Result', $result);
+        $this->SetValueBoolean('Hint', $hint);
     }
 
     /**
