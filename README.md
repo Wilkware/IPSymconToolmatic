@@ -24,18 +24,12 @@ Folgende Module beinhaltet das IP Symcon Toolmatic Repository:
 - __Luftfeuchtigssensor__ ([Dokumentation](HumitidySensor))  
 	Lohnt sich das Lüften? Berechnung von Wassergehalt und Taupunkt mit ensprechender Entscheidungsvorlage. 
 
-
 ### Historie
 
-2016-12-20
-* _Modul_ Lichtautomat(LightAutomat)
-
-2017-01-01
-* _Modul_ Präsensmelder(PresenceDetector)
-
-20197-03-17
-* _Modul_ Rollladenaktor(ShutterActuator)
-* _Modul_ Luftfeuchtigssensor(HumitidySensor)
+* 2016-12-20 - Modul Lichtautomat(LightAutomat)
+* 2017-01-01 - Modul Präsensmelder(PresenceDetector)
+* 2019-03-17 - Modul Rollladenaktor(ShutterActuator)
+* 2019-03-17 - Modul Luftfeuchtigssensor(HumitidySensor)
 
 ### Entwickler
 * Heiko Wilknitz ([@wilkware](https://github.com/wilkware))
