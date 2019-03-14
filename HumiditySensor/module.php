@@ -43,7 +43,7 @@ class HumitidySensor extends IPSModule
         parent::ApplyChanges();
 
         // Update Trigger Timer
-         $this->SetTimerInterval('UpdateTrigger', 1000 * 60 * $this->ReadPropertyInteger('UpdateTimer'));
+        $this->SetTimerInterval('UpdateTrigger', 1000 * 60 * $this->ReadPropertyInteger('UpdateTimer'));
 
         // Profile "THS.AirOrNot"
         $association = [
