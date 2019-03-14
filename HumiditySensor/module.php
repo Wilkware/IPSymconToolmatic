@@ -33,14 +33,17 @@ class HumitidySensor extends IPSModule
         $this->RegisterPropertyBoolean('CreateDewPoint', true);
         $this->RegisterPropertyBoolean('CreateWaterContent', true);
 
-        // Update timer
-        $this->RegisterCyclicTimer('UpdateTimer', 0, 15, 0, 'THS_Update('.$this->InstanceID.');', true);
+        // Update trigger
+        $this->RegisterTimer('UpdateTrigger', 0, "THS_Update(\$_IPS['TARGET']);");
     }
 
     public function ApplyChanges()
     {
         //Never delete this line!
         parent::ApplyChanges();
+
+        // Update Trigger Timer
+         $this->SetTimerInterval('UpdateTrigger', 1000 * 60 * $this->ReadPropertyInteger('UpdateTimer'));
 
         // Profile "THS.AirOrNot"
         $association = [
@@ -53,7 +56,7 @@ class HumitidySensor extends IPSModule
         $association = [
             [0, '%0.2f', '', 0x808080],
         ];
-        $this->RegisterProfile(IPSVarType::vtBoolean, 'THS.WaterContent', 'Drops', '', ' g/m³', 0, 0, 0, 0, $association);
+        $this->RegisterProfile(IPSVarType::vtFloat, 'THS.WaterContent', 'Drops', '', ' g/m³', 0, 0, 0, 0, $association);
 
         // Update Timer
         $minutes = $this->ReadPropertyInteger('UpdateTimer');
