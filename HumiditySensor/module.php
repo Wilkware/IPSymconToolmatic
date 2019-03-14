@@ -32,7 +32,7 @@ class HumitidySensor extends IPSModule
         $this->RegisterPropertyInteger('UpdateTimer', 15);
         $this->RegisterPropertyBoolean('CreateDewPoint', true);
         $this->RegisterPropertyBoolean('CreateWaterContent', true);
-       // Update trigger
+        // Update trigger
         $this->RegisterTimer('UpdateTrigger', 0, "THS_Update(\$_IPS['TARGET']);");
     }
 
@@ -81,7 +81,7 @@ class HumitidySensor extends IPSModule
     public function Update()
     {
         $result = 'Ergebnis konnte nicht ermittelt werden!';
-        
+
         // Daten lesen
         $state = true;
         // Temp Outdoor
@@ -90,7 +90,7 @@ class HumitidySensor extends IPSModule
             $to = GetValue($to);
         } else {
             $this->SendDebug('UPDATE', 'Temperature Outdoor not set!', 0);
-            $state  = false;
+            $state = false;
         }
         // Humidity Outddoor
         $ho = $this->RegisterPropertyInteger('HumyOutdoor');
@@ -98,7 +98,7 @@ class HumitidySensor extends IPSModule
             $ho = GetValue($ho);
         } else {
             $this->SendDebug('UPDATE', 'Humidity Outdoor not set!', 0);
-            $state  = false;
+            $state = false;
         }
         // Temp indoor
         $ti = $this->RegisterPropertyInteger('TempIndoor');
@@ -106,7 +106,7 @@ class HumitidySensor extends IPSModule
             $ti = GetValue($ti);
         } else {
             $this->SendDebug('UPDATE', 'Temperature Indoor not set!', 0);
-            $state  = false;
+            $state = false;
         }
         // Humidity Outddoor
         $hi = $this->RegisterPropertyInteger('HumyIndoor');
@@ -114,17 +114,17 @@ class HumitidySensor extends IPSModule
             $hi = GetValue($hi);
         } else {
             $this->SendDebug('UPDATE', 'Humidity Indoor not set!', 0);
-            $state  = false;
+            $state = false;
         }
         // All okay
         if ($state == false) {
             $this->SetValueString('Result', $result);
-            
+
             return;
         }
-        
+
         // Minus oder Plus ;-)
-        if ( $ti >=0 )  {
+        if ($ti >= 0) {
             // Plustemperaturen
             $ao = 7.5;
             $bo = 237.7;
@@ -139,7 +139,7 @@ class HumitidySensor extends IPSModule
         }
 
         $rg = 8314.3;
-        $m  = 18.016;
+        $m = 18.016;
         $ko = $to + 273.15;
         $ki = $ti + 273.15;
 
@@ -171,19 +171,19 @@ class HumitidySensor extends IPSModule
             SetValue('WaterContentOutdoor', $wco);
             SetValue('WaterContentIndoor', $wci);
         }
-        
+
         // Result (diff out / in)
         $wc = $wco - $wci;
         $wcy = ($wci / $wco) * 100;
-        if ($wcy >=0) {
-            $result = round((100 - $wcy)*100)/100 . '% trockener! Draussen ist es feuchter!';
-            $hint    = false;
-        } else if ($wcy <=110) {
-            $result = 'Zwar ist es innen ' . round((100 - $wcy)*100)/100 . '% feuchter, aber es lohnt nicht zu lüften!'; 
-            $hint    = false;
+        if ($wcy >= 0) {
+            $result = round((100 - $wcy) * 100) / 100 .'% trockener! Draussen ist es feuchter!';
+            $hint = false;
+        } elseif ($wcy <= 110) {
+            $result = 'Zwar ist es innen '.round((100 - $wcy) * 100) / 100 .'% feuchter, aber es lohnt nicht zu lüften!';
+            $hint = false;
         } else {
-            $result = 'Innen ist es ' . round((100 - $wcy)*100)/100 . '% feuchter!';
-            $hint    = true;
+            $result = 'Innen ist es '.round((100 - $wcy) * 100) / 100 .'% feuchter!';
+            $hint = true;
         }
         SetValue('Result', $result);
         SetValue('Hint', $hint);
