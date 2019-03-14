@@ -85,7 +85,7 @@ class HumitidySensor extends IPSModule
         // Daten lesen
         $state = true;
         // Temp Outdoor
-        $to = $this->RegisterPropertyInteger('TempOutdoor');
+        $to = $this->ReadPropertyInteger('TempOutdoor');
         if ($to != 0) {
             $to = GetValue($to);
         } else {
@@ -93,7 +93,7 @@ class HumitidySensor extends IPSModule
             $state = false;
         }
         // Humidity Outddoor
-        $ho = $this->RegisterPropertyInteger('HumyOutdoor');
+        $ho = $this->ReadPropertyInteger('HumyOutdoor');
         if ($ho != 0) {
             $ho = GetValue($ho);
         } else {
@@ -101,7 +101,7 @@ class HumitidySensor extends IPSModule
             $state = false;
         }
         // Temp indoor
-        $ti = $this->RegisterPropertyInteger('TempIndoor');
+        $ti = $this->ReadPropertyInteger('TempIndoor');
         if ($ti != 0) {
             $ti = GetValue($ti);
         } else {
@@ -109,7 +109,7 @@ class HumitidySensor extends IPSModule
             $state = false;
         }
         // Humidity Outddoor
-        $hi = $this->RegisterPropertyInteger('HumyIndoor');
+        $hi = $this->ReadPropertyInteger('HumyIndoor');
         if ($hi != 0) {
             $hi = GetValue($hi);
         } else {
