@@ -158,8 +158,8 @@ class HumitidySensor extends IPSModule
 
         $update = $this->ReadPropertyBoolean('CreateDewPoint');
         if ($update == true) {
-            SetValue('DewPointOutdoor', $dpo);
-            SetValue('DewPointIndoor', $dpi);
+            SetValueFloat('DewPointOutdoor', $dpo);
+            SetValueFloat('DewPointIndoor', $dpi);
         }
 
         // WaterContent
@@ -168,8 +168,8 @@ class HumitidySensor extends IPSModule
 
         $update = $this->ReadPropertyBoolean('CreateWaterContent');
         if ($update == true) {
-            SetValue('WaterContentOutdoor', $wco);
-            SetValue('WaterContentIndoor', $wci);
+            SetValueFloat('WaterContentOutdoor', $wco);
+            SetValueFloat('WaterContentIndoor', $wci);
         }
 
         // Result (diff out / in)
@@ -185,8 +185,8 @@ class HumitidySensor extends IPSModule
             $result = 'Innen ist es '.round((100 - $wcy) * 100) / 100 .'% feuchter!';
             $hint = true;
         }
-        SetValue('Result', $result);
-        SetValue('Hint', $hint);
+        SetValueString('Result', $result);
+        SetValueBoolean('Hint', $hint);
     }
 
     /**
@@ -399,6 +399,18 @@ class HumitidySensor extends IPSModule
     {
         $id = $this->GetIDForIdent($ident);
         SetValueInteger($id, $value);
+    }
+
+    /**
+     * Update a float value.
+     *
+     * @param string $Ident Ident of the float variable
+     * @param float  $value Value of the float variable
+     */
+    private function SetValueFloat(string $ident, float $value)
+    {
+        $id = $this->GetIDForIdent($ident);
+        SetValueFloat($id, $value);
     }
 }
 
