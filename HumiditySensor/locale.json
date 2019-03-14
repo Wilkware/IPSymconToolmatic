@@ -3,7 +3,7 @@
     "de": {
         "Outdoor climate": "Außenklima",
         "Temperature:": "Temperatur:",
-        "Humidity:"; "Luftfeuchtigkeit:",
+        "Humidity:": "Luftfeuchtigkeit:",
         "Indoor climate": "Raumklima",
         "Dashboard": "Meldungsverwaltung",
         "Settings to use the dashboard message script.": "Einstellungen zum Verwendes des Meldungsverwaltungsscripts.",
@@ -18,7 +18,7 @@
         "Create variables for indoor and outdoor dewpoint?": "Sollen die Variablen für Aussen- und Innentaupunkt angelegt werden?",
         "Create variables for indoor and outdoor water content?": "Sollen die Variablen für Aussen- und Innenwassergehalt der Luft angelegt werden?",
         "Calculate values!": "Werte berechnen!",
-        "CALCULATE": "BERECHNEN",
+        "CALCULATE": "BERECHNEN"
     }
   }
 }

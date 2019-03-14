@@ -47,8 +47,8 @@ class HumitidySensor extends IPSModule
 
         // Profile "THS.AirOrNot"
         $association = [
-            [0, 'Nein', 'Window-100', 0xFF0000],
-            [1, 'Ja',   'Window-0', 0x00FF00],
+            [0, 'Nicht Lüften!', 'Window-100', 0xFF0000],
+            [1, 'Lüften!', 'Window-0', 0x00FF00],
         ];
         $this->RegisterProfile(IPSVarType::vtBoolean, 'THS.AirOrNot', 'Window', '', '', 0, 0, 0, 0, $association);
 
@@ -73,8 +73,8 @@ class HumitidySensor extends IPSModule
 
         // Wassergehalt (WaterContent)
         $create = $this->ReadPropertyBoolean('CreateWaterContent');
-        $this->RegisterVariable(IPSVarType::vtFloat, 'Wassergehalt Aussen', 'DewPointOutdoor', 'THS.WaterContent', 5, $create);
-        $this->RegisterVariable(IPSVarType::vtFloat, 'Wassergehalt Innen', 'DewPointIndoor', 'THS.WaterContent', 6, $create);
+        $this->RegisterVariable(IPSVarType::vtFloat, 'Wassergehalt Aussen', 'WaterContentOutdoor', 'THS.WaterContent', 5, $create);
+        $this->RegisterVariable(IPSVarType::vtFloat, 'Wassergehalt Innen', 'WaterContentIndoor', 'THS.WaterContent', 6, $create);
     }
 
     /**
