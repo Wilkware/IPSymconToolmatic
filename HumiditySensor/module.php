@@ -58,10 +58,6 @@ class HumitidySensor extends IPSModule
         ];
         $this->RegisterProfile(IPSVarType::vtFloat, 'THS.WaterContent', 'Drops', '', ' g/m³', 0, 0, 0, 0, $association);
 
-        // Update Timer
-        $minutes = $this->ReadPropertyInteger('UpdateTimer');
-        $this->RegisterCyclicTimer('UpdateTimer', 0, $minutes, 0, 'THS_Update('.$this->InstanceID.');', true);
-
         // Ergebnis & Hinweis
         $this->RegisterVariable(IPSVarType::vtBoolean, 'Hinweis', 'Hint', 'THS.AirOrNot', 1, true);
         $this->RegisterVariable(IPSVarType::vtString, 'Ergebnis', 'Result', '', 2, true);
