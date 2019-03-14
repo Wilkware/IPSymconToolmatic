@@ -67,7 +67,7 @@ class LightAutomat extends IPSModule
                     $this->SendDebug('MessageSink', 'Dauerbetrieb ist angeschalten!', 0);
                     break;
                 }
-        
+
                 if ($data[0] == true && $data[1] == true) { // OnChange auf TRUE, d.h. Angeschalten
                     $this->SendDebug('MessageSink', 'OnChange auf TRUE - Angeschalten', 0);
                     $this->SetTimerInterval('TriggerTimer', 1000 * 60 * $this->ReadPropertyInteger('Duration'));
