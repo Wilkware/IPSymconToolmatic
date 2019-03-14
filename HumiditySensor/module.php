@@ -158,8 +158,8 @@ class HumitidySensor extends IPSModule
 
         $update = $this->ReadPropertyBoolean('CreateDewPoint');
         if ($update == true) {
-            $this->SetValueFloat('DewPointOutdoor', $dpo);
-            $this->SetValueFloat('DewPointIndoor', $dpi);
+            $this->SetValue('DewPointOutdoor', $dpo);
+            $this->SetValue('DewPointIndoor', $dpi);
         }
 
         // WaterContent
@@ -168,8 +168,8 @@ class HumitidySensor extends IPSModule
 
         $update = $this->ReadPropertyBoolean('CreateWaterContent');
         if ($update == true) {
-            $this->SetValueFloat('WaterContentOutdoor', $wco);
-            $this->SetValueFloat('WaterContentIndoor', $wci);
+            $this->SetValue('WaterContentOutdoor', $wco);
+            $this->SetValue('WaterContentIndoor', $wci);
         }
 
         // Result (diff out / in)
@@ -190,8 +190,8 @@ class HumitidySensor extends IPSModule
 
         $scriptId = $this->ReadPropertyInteger('ScriptMessage');
         if ($scriptId != 0 && $hint == true) {
-            $room = $this->RegisterPropertyString('RoomName');
-            $time = $this->RegisterPropertyInteger('LifeTime');
+            $room = $this->ReadPropertyString('RoomName');
+            $time = $this->ReadPropertyInteger('LifeTime');
             $time = $time * 60;
             if (IPS_ScriptExists($scriptId)) {
                 if ($time >0) {
