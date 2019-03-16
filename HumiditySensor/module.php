@@ -57,19 +57,29 @@ class HumitidySensor extends IPSModule
         ];
         $this->RegisterProfile(IPSVarType::vtFloat, 'THS.WaterContent', 'Drops', '', ' g/m³', 0, 0, 0, 0, $association);
 
-        // Ergebnis & Hinweis
+        // Profile "THS.Difference"
+        $association = [
+            [-500, '%0.2f %%', 'Window-100', 32768],
+            [0, '%0.2f %%', 'Window-100', 32768],
+            [0,01, '+%0.2f %%', 'Window-100', 16744448],
+            [10, '+%0.2f %%', 'Window-0', 16711680],
+        ];
+        $this->RegisterProfile(IPSVarType::vtFloat, 'THS.Difference', 'Window', '', '', 0, 0, 0, 2, $association);
+
+         // Ergebnis & Hinweis & Differenz
         $this->RegisterVariable(IPSVarType::vtBoolean, 'Hinweis', 'Hint', 'THS.AirOrNot', 1, true);
         $this->RegisterVariable(IPSVarType::vtString, 'Ergebnis', 'Result', '', 2, true);
-
+//        $this->RegisterVariable(IPSVarType::vtFloat, 'Differenz', 'Difference', 'THS.Difference', 3, true);
+        $this->MaintainVariable('Difference', 'Differenz', IPSVarType::vtFloat, "THS.Difference", 3, true);
         // Taupunkt
         $create = $this->ReadPropertyBoolean('CreateDewPoint');
-        $this->RegisterVariable(IPSVarType::vtFloat, 'Taupunkt Aussen', 'DewPointOutdoor', '~Temperature', 3, $create);
-        $this->RegisterVariable(IPSVarType::vtFloat, 'Taupunkt Innen', 'DewPointIndoor', '~Temperature', 4, $create);
+        $this->RegisterVariable(IPSVarType::vtFloat, 'Taupunkt Aussen', 'DewPointOutdoor', '~Temperature', 4, $create);
+        $this->RegisterVariable(IPSVarType::vtFloat, 'Taupunkt Innen', 'DewPointIndoor', '~Temperature', 5, $create);
 
         // Wassergehalt (WaterContent)
         $create = $this->ReadPropertyBoolean('CreateWaterContent');
-        $this->RegisterVariable(IPSVarType::vtFloat, 'Wassergehalt Aussen', 'WaterContentOutdoor', 'THS.WaterContent', 5, $create);
-        $this->RegisterVariable(IPSVarType::vtFloat, 'Wassergehalt Innen', 'WaterContentIndoor', 'THS.WaterContent', 6, $create);
+        $this->RegisterVariable(IPSVarType::vtFloat, 'Wassergehalt Aussen', 'WaterContentOutdoor', 'THS.WaterContent', 6, $create);
+        $this->RegisterVariable(IPSVarType::vtFloat, 'Wassergehalt Innen', 'WaterContentIndoor', 'THS.WaterContent', 7, $create);
     }
 
     /**
@@ -81,7 +91,6 @@ class HumitidySensor extends IPSModule
     public function Update()
     {
         $result = 'Ergebnis konnte nicht ermittelt werden!';
-
         // Daten lesen
         $state = true;
         // Temp Outdoor
@@ -175,18 +184,20 @@ class HumitidySensor extends IPSModule
         // Result (diff out / in)
         $wc = $wco - $wci;
         $wcy = ($wci / $wco) * 100;
+        $difference = round(($wcy - 100) * 100) / 100;
         if ($wc >= 0) {
-            $result = round((100 - $wcy) * 100) / 100 .'% trockener! Draussen ist es feuchter!';
+            $result = round((100 - $wcy) * 100) / 100.'% trockener! Draussen ist es feuchter!';
             $hint = false;
         } elseif ($wcy <= 110) {
-            $result = 'Zwar ist es innen '.round(($wcy - 100) * 100) / 100 .'% feuchter, aber es lohnt nicht zu lüften!';
+            $result = 'Zwar ist es innen '.$difference.'% feuchter, aber es lohnt nicht zu lüften!';
             $hint = false;
         } else {
-            $result = 'Innen ist es '.round(($wcy - 100) * 100) / 100 .'% feuchter!';
+            $result = 'Innen ist es '.$difference.'% feuchter!';
             $hint = true;
         }
         $this->SetValue('Result', $result);
         $this->SetValue('Hint', $hint);
+        $this->SetValue('Difference', $difference);
 
         $scriptId = $this->ReadPropertyInteger('ScriptMessage');
         if ($scriptId != 0 && $hint == true) {
