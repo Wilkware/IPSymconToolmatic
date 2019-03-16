@@ -179,7 +179,7 @@ class HumitidySensor extends IPSModule
         $wcy = ($wci / $wco) * 100;
         $difference = round(($wcy - 100) * 100) / 100;
         if ($wc >= 0) {
-            $difference = round((100 - $wcy) * 100) / 100; 
+            $difference = round((100 - $wcy) * 100) / 100;
             $result = 'Lüften führt nicht zur Trocknung der Innenraumluft.';
             $hint = false;
         } elseif ($wcy <= 110) {
