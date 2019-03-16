@@ -1,18 +1,12 @@
 <?php
 
-// --- BASE MESSAGE
-if (!defined('IPS_BASE')) {
-    define('IPS_BASE', 10000);
-}
-// --- VARIABLE MANAGER
-if (!defined('IPS_VARIABLEMESSAGE')) {
-    define('IPS_VARIABLEMESSAGE', IPS_BASE + 600);
-    define('VM_UPDATE', IPS_VARIABLEMESSAGE + 3);
-}
+require_once __DIR__ . '/../libs/traits.php';  // Allgemeine Funktionen
 
 // CLASS PresenceDetector
 class HumitidySensor extends IPSModule
 {
+    use ProfileHelper, DebugHelper;
+
     public function Create()
     {
         //Never delete this line!
@@ -49,13 +43,13 @@ class HumitidySensor extends IPSModule
             [0, 'Nicht Lüften!', 'Window-100', 0xFF0000],
             [1, 'Lüften!', 'Window-0', 0x00FF00],
         ];
-        $this->RegisterProfile(IPSVarType::vtBoolean, 'THS.AirOrNot', 'Window', '', '', 0, 0, 0, 0, $association);
+        $this->RegisterProfile(vtBoolean, 'THS.AirOrNot', 'Window', '', '', 0, 0, 0, 0, $association);
 
         // Profile "THS.WaterContent"
         $association = [
             [0, '%0.2f', '', 0x808080],
         ];
-        $this->RegisterProfile(IPSVarType::vtFloat, 'THS.WaterContent', 'Drops', '', ' g/m³', 0, 0, 0, 0, $association);
+        $this->RegisterProfile(vtFloat, 'THS.WaterContent', 'Drops', '', ' g/m³', 0, 0, 0, 0, $association);
 
         // Profile "THS.Difference"
         $association = [
@@ -64,22 +58,21 @@ class HumitidySensor extends IPSModule
             [0.01, '+%0.2f %%', 'Window-100', 16744448],
             [10, '+%0.2f %%', 'Window-0', 16711680],
         ];
-        $this->RegisterProfile(IPSVarType::vtFloat, 'THS.Difference', 'Window', '', '', 0, 0, 0, 2, $association);
+        $this->RegisterProfile(vtFloat, 'THS.Difference', 'Window', '', '', 0, 0, 0, 2, $association);
 
         // Ergebnis & Hinweis & Differenz
-        $this->RegisterVariable(IPSVarType::vtBoolean, 'Hinweis', 'Hint', 'THS.AirOrNot', 1, true);
-        $this->RegisterVariable(IPSVarType::vtString, 'Ergebnis', 'Result', '', 2, true);
-//        $this->RegisterVariable(IPSVarType::vtFloat, 'Differenz', 'Difference', 'THS.Difference', 3, true);
-        $this->MaintainVariable('Difference', 'Differenz', IPSVarType::vtFloat, 'THS.Difference', 3, true);
+        $this->MaintainVariable('Hint', 'Hinweis', vtBoolean, 'THS.AirOrNot', 1, true);
+        $this->MaintainVariable('Result', 'Ergebnis', vtString, '', 2, true);
+        $this->MaintainVariable('Difference', 'Differenz', vtFloat, 'THS.Difference', 3, true);
         // Taupunkt
         $create = $this->ReadPropertyBoolean('CreateDewPoint');
-        $this->RegisterVariable(IPSVarType::vtFloat, 'Taupunkt Aussen', 'DewPointOutdoor', '~Temperature', 4, $create);
-        $this->RegisterVariable(IPSVarType::vtFloat, 'Taupunkt Innen', 'DewPointIndoor', '~Temperature', 5, $create);
+        $this->MaintainVariable('DewPointOutdoor', 'Taupunkt Aussen', vtFloat, '~Temperature', 4, $create);
+        $this->MaintainVariable('DewPointIndoor', 'Taupunkt Innen', vtFloat, '~Temperature', 5, $create);
 
         // Wassergehalt (WaterContent)
         $create = $this->ReadPropertyBoolean('CreateWaterContent');
-        $this->RegisterVariable(IPSVarType::vtFloat, 'Wassergehalt Aussen', 'WaterContentOutdoor', 'THS.WaterContent', 6, $create);
-        $this->RegisterVariable(IPSVarType::vtFloat, 'Wassergehalt Innen', 'WaterContentIndoor', 'THS.WaterContent', 7, $create);
+        $this->MaintainVariable('WaterContentOutdoor', 'Wassergehalt Aussen', vtFloat, 'THS.WaterContent', 6, $create);
+        $this->MaintainVariable('WaterContentIndoor', 'Wassergehalt Innen', vtFloat, 'THS.WaterContent', 7, $create);
     }
 
     /**
@@ -186,12 +179,15 @@ class HumitidySensor extends IPSModule
         $wcy = ($wci / $wco) * 100;
         $difference = round(($wcy - 100) * 100) / 100;
         if ($wc >= 0) {
+            // Lüften führt nicht zur Trocknung der Innenraumluft.
             $result = round((100 - $wcy) * 100) / 100 .'% trockener! Draussen ist es feuchter!';
             $hint = false;
         } elseif ($wcy <= 110) {
+            // Zwar ist es innen etwas feuchter, aber es lohnt nicht zu lüften!.
             $result = 'Zwar ist es innen '.$difference.'% feuchter, aber es lohnt nicht zu lüften!';
             $hint = false;
         } else {
+            // Lüften führt zur Trocknung der Innenraumluft.
             $result = 'Innen ist es '.$difference.'% feuchter!';
             $hint = true;
         }
@@ -231,178 +227,4 @@ class HumitidySensor extends IPSModule
         IPS_SetProperty($this->InstanceID, 'UpdateTimer', $duration);
         IPS_ApplyChanges($this->InstanceID);
     }
-
-    /**
-     * Create the profile for the given associations.
-     */
-    protected function RegisterProfile($vartype, $name, $icon, $prefix = '', $suffix = '', $minvalue = 0, $maxvalue = 0, $stepsize = 0, $digits = 0, $associations = null)
-    {
-        if (!IPS_VariableProfileExists($name)) {
-            switch ($vartype) {
-                case IPSVarType::vtBoolean:
-                    $this->RegisterProfileBoolean($name, $icon, $prefix, $suffix, $associations);
-                    break;
-                case IPSVarType::vtInteger:
-                    $this->RegisterProfileInteger($name, $icon, $prefix, $suffix, $minvalue, $maxvalue, $stepsize, $digits, $associations);
-                    break;
-                case IPSVarType::vtFloat:
-                    $this->RegisterProfileFloat($name, $icon, $prefix, $suffix, $minvalue, $maxvalue, $stepsize, $digits, $associations);
-                    break;
-                case IPSVarType::vtString:
-                    $this->RegisterProfileString($name, $icon);
-                    break;
-            }
-        }
-
-        return $name;
-    }
-
-    protected function RegisterProfileType($name, $type)
-    {
-        if (!IPS_VariableProfileExists($name)) {
-            IPS_CreateVariableProfile($name, $type);
-        } else {
-            $profile = IPS_GetVariableProfile($name);
-            if ($profile['ProfileType'] != $type) {
-                throw new Exception('Variable profile type does not match for profile '.$name);
-            }
-        }
-    }
-
-    protected function RegisterProfileBoolean($name, $icon, $prefix, $suffix, $asso)
-    {
-        $this->RegisterProfileType($name, IPSVarType::vtBoolean);
-
-        IPS_SetVariableProfileIcon($name, $icon);
-        IPS_SetVariableProfileText($name, $prefix, $suffix);
-
-        if (count($asso) !== 0) {
-            foreach ($asso as $ass) {
-                IPS_SetVariableProfileAssociation($name, $ass[0], $ass[1], $ass[2], $ass[3]);
-            }
-        }
-    }
-
-    protected function RegisterProfileInteger($name, $icon, $prefix, $suffix, $minvalue, $maxvalue, $step, $digits, $asso)
-    {
-        $this->RegisterProfileType($name, IPSVarType::vtInteger);
-
-        IPS_SetVariableProfileIcon($name, $icon);
-        IPS_SetVariableProfileText($name, $prefix, $suffix);
-        IPS_SetVariableProfileDigits($name, $digits);
-
-        if (count($asso) === 0) {
-            $minvalue = 0;
-            $maxvalue = 0;
-        }
-        IPS_SetVariableProfileValues($name, $minvalue, $maxvalue, $step);
-
-        if (count($asso) !== 0) {
-            foreach ($asso as $ass) {
-                IPS_SetVariableProfileAssociation($name, $ass[0], $ass[1], $ass[2], $ass[3]);
-            }
-        }
-    }
-
-    protected function RegisterProfileFloat($name, $icon, $prefix, $suffix, $minvalue, $maxvalue, $step, $digits, $asso)
-    {
-        $this->RegisterProfileType($name, IPSVarType::vtFloat);
-
-        IPS_SetVariableProfileIcon($name, $icon);
-        IPS_SetVariableProfileText($name, $prefix, $suffix);
-        IPS_SetVariableProfileDigits($name, $digits);
-
-        if (count($asso) === 0) {
-            $minvalue = 0;
-            $maxvalue = 0;
-        }
-        IPS_SetVariableProfileValues($name, $minvalue, $maxvalue, $step);
-
-        if (count($asso) !== 0) {
-            foreach ($asso as $ass) {
-                IPS_SetVariableProfileAssociation($name, $ass[0], $ass[1], $ass[2], $ass[3]);
-            }
-        }
-    }
-
-    protected function RegisterProfileString($name, $icon, $prefix, $suffix)
-    {
-        $this->RegisterProfileType($name, IPSVarType::vtString);
-
-        IPS_SetVariableProfileText($name, $prefix, $suffix);
-        IPS_SetVariableProfileIcon($name, $icon);
-    }
-
-    /**
-     * Create or delete variable.
-     */
-    protected function RegisterVariable($vartype, $name, $ident, $profile, $position, $register)
-    {
-        if ($register == true) {
-            switch ($vartype) {
-                case IPSVarType::vtBoolean:
-                    $objId = $this->RegisterVariableBoolean($ident, $name, $profile, $position);
-                    break;
-                case IPSVarType::vtInteger:
-                    $objId = $this->RegisterVariableInteger($ident, $name, $profile, $position);
-                    break;
-                case IPSVarType::vtFloat:
-                    $objId = $this->RegisterVariableFloat($ident, $name, $profile, $position);
-                    break;
-                case IPSVarType::vtString:
-                    $objId = $this->RegisterVariableString($ident, $name, $profile, $position);
-                    break;
-            }
-        } else {
-            $objId = @$this->GetIDForIdent($ident);
-            if ($objId > 0) {
-                $this->UnregisterVariable($ident);
-            }
-        }
-
-        return $objId;
-    }
-
-    /**
-     * Create the cyclic Update Timer.
-     *
-     * @param string $ident Name and Ident of the Timer.
-     * @param string $cId   Client ID .
-     */
-    protected function RegisterCyclicTimer($ident, $hour, $minute, $second, $script, $active)
-    {
-        $id = @$this->GetIDForIdent($ident);
-        $name = $ident;
-        if ($id && IPS_GetEvent($id)['EventType'] != 1) {
-            IPS_DeleteEvent($id);
-            $id = 0;
-        }
-        if (!$id) {
-            $id = IPS_CreateEvent(1);
-            IPS_SetParent($id, $this->InstanceID);
-            IPS_SetIdent($id, $ident);
-        }
-        IPS_SetName($id, $name);
-        // IPS_SetInfo($id, "Update Timer");
-        // IPS_SetHidden($id, true);
-        IPS_SetEventScript($id, $script);
-        if (!IPS_EventExists($id)) {
-            throw new Exception("Ident with name $ident is used for wrong object type");
-        }
-        //IPS_SetEventCyclic($id, 0, 0, 0, 0, 0, 0);
-        IPS_SetEventCyclicTimeFrom($id, $hour, $minute, $second);
-        IPS_SetEventActive($id, $active);
-    }
-}
-
-/**
- * Helper class for IPS variable types.
- */
-class IPSVarType extends stdClass
-{
-    const vtNone = -1;
-    const vtBoolean = 0;
-    const vtInteger = 1;
-    const vtFloat = 2;
-    const vtString = 3;
 }
