@@ -68,7 +68,7 @@ Die Funktion liefert die prozentuale Laufzeit als Rückgabewert zurück.
 
 Beispiel:
 `TSA_Position(12345, 0.25);`<br />
-Öffnet bzw. schließt den Rollladen auf 25%n.<br />
+Öffnet bzw. schließt den Rollladen auf 25%.<br />
 
 ### 8. Versionshistorie
 

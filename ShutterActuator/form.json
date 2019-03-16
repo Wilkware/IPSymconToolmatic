@@ -14,36 +14,35 @@
         "columns": [
             {   "caption": "Position",
                 "name": "Position", 
-                "width": "75px",
+                "width": "100px",
             }, 
             {   "caption": "Level",
                 "name": "Level",
                 "width": "auto",
                 "edit": {
                     "type": "NumberSpinner",
-                    "digits": 0,
-                    "suffix": "%"
+                    "digits": 2
                 }
             }
         ],
         "values": [
             {   "Position": "Auf (0%)",
-                "Level": "100"
+                "Level": "1.0"
             },
             {   "Position": "25 %",
-                "Level": "85"
+                "Level": "0.85"
             },
             {   "Position": "50 %",
-                "Level": "70"
+                "Level": "0.70"
             },
             {   "Position": "75 %",
-                "Level": "50"
+                "Level": "0.50"
             },
             {   "Position": "99 %",
-                "Level": "25"
+                "Level": "0.25"
             },
             {   "Position": "Zu (100%)",
-                "Level": "0"
+                "Level": "0.0"
             }
         ]
     }
