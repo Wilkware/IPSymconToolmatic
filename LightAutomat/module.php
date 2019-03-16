@@ -5,6 +5,8 @@ require_once __DIR__.'/../libs/traits.php';  // Allgemeine Funktionen
 // CLASS LightAutomat
 class LightAutomat extends IPSModule
 {
+    use DebugHelper;
+
     public function Create()
     {
         //Never delete this line!
