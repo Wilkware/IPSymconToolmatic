@@ -67,14 +67,14 @@ Taupunkt Aussen      | Float     | Taupunkt der Aussenluft
 Taupunkt Innen       | Float     | Taupunkt der Innenluft
 Ergebnis             | String    | Zusammenfassung des Berechnungsergebnisses
 Hinweis              | Boolean   | Hinweis ob Lüften oder nicht!
-Differenz            | Float     | Differenz der Luftfeute zwischen Aussen und Innen<br />[+]=Innen feuter, [-]=Aussen feuter
+Differenz            | Float     | Differenz der Luftfeute zwischen Aussen und Innen<br />[+]=Innen feuchter, [-]=Aussen feuchter
 
 Folgende Profile werden angelegt:
 
 Name                 | Typ       | Beschreibung
 -------------------- | --------- | ----------------
-THS.Differnce        | Float     | Differenz der Luftfeute in Prozent (Vorzeichenbehaftet)
-THS.WaterContent     | Float     | Wassergehalt der Luft in g/m3
+THS.Differnce        | Float     | Differenz der Luftfeuchte in Prozent (Vorzeichenbehaftet)
+THS.WaterContent     | Float     | Wassergehalt der Luft in g/m³
 THS.AirOrNot         | Boolaen   | Lüften (true) oder Nicht (false)
 
 ### 6. WebFront
