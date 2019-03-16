@@ -61,7 +61,7 @@ class HumitidySensor extends IPSModule
         $association = [
             [-500, '%0.2f %%', 'Window-100', 32768],
             [0, '%0.2f %%', 'Window-100', 32768],
-            [0, 01, '+%0.2f %%', 'Window-100', 16744448],
+            [0.01, '+%0.2f %%', 'Window-100', 16744448],
             [10, '+%0.2f %%', 'Window-0', 16711680],
         ];
         $this->RegisterProfile(IPSVarType::vtFloat, 'THS.Difference', 'Window', '', '', 0, 0, 0, 2, $association);
@@ -189,10 +189,10 @@ class HumitidySensor extends IPSModule
             $result = round((100 - $wcy) * 100) / 100 .'% trockener! Draussen ist es feuchter!';
             $hint = false;
         } elseif ($wcy <= 110) {
-            $result = 'Zwar ist es innen '.$difference.'% feuchter, aber es lohnt nicht zu lüften!';
+            $result = 'Zwar ist es innen '. $difference .'% feuchter, aber es lohnt nicht zu lüften!';
             $hint = false;
         } else {
-            $result = 'Innen ist es '.$difference.'% feuchter!';
+            $result = 'Innen ist es '. $difference .'% feuchter!';
             $hint = true;
         }
         $this->SetValue('Result', $result);
