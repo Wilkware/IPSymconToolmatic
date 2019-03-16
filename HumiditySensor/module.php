@@ -2,7 +2,7 @@
 
 require_once __DIR__.'/../libs/traits.php';  // Allgemeine Funktionen
 
-// CLASS PresenceDetector
+// CLASS HumitidySensor
 class HumitidySensor extends IPSModule
 {
     use ProfileHelper, DebugHelper;
@@ -179,16 +179,14 @@ class HumitidySensor extends IPSModule
         $wcy = ($wci / $wco) * 100;
         $difference = round(($wcy - 100) * 100) / 100;
         if ($wc >= 0) {
-            // Lüften führt nicht zur Trocknung der Innenraumluft.
-            $result = round((100 - $wcy) * 100) / 100 .'% trockener! Draussen ist es feuchter!';
+            $difference = round((100 - $wcy) * 100) / 100; 
+            $result = 'Lüften führt nicht zur Trocknung der Innenraumluft.';
             $hint = false;
         } elseif ($wcy <= 110) {
-            // Zwar ist es innen etwas feuchter, aber es lohnt nicht zu lüften!.
-            $result = 'Zwar ist es innen '.$difference.'% feuchter, aber es lohnt nicht zu lüften!';
+            $result = 'Zwar ist es innen etwas feuchter, aber es lohnt nicht zu lüften!';
             $hint = false;
         } else {
-            // Lüften führt zur Trocknung der Innenraumluft.
-            $result = 'Innen ist es '.$difference.'% feuchter!';
+            $result = 'Lüften führt zur Trocknung der Innenraumluft!';
             $hint = true;
         }
         $this->SetValue('Result', $result);
@@ -203,11 +201,11 @@ class HumitidySensor extends IPSModule
             if (IPS_ScriptExists($scriptId)) {
                 if ($time > 0) {
                     IPS_RunScriptWaitEx($scriptId,
-                        ['action'       => 'add', 'text' => $room.' bitte lüften!', 'expires' => time() + $time,
+                        ['action'       => 'add', 'text' => $room.': '.$result, 'expires' => time() + $time,
                             'removable' => true, 'type' => 3, 'image' => 'Ventilation', ]);
                 } else {
                     IPS_RunScriptWaitEx($scriptId,
-                        ['action'       => 'add', 'text' => $room.' bitte lüften!',
+                        ['action'       => 'add', 'text' => $room.': '.$result,
                             'removable' => true, 'type' => 3, 'image' => 'Ventilation', ]);
                 }
             }

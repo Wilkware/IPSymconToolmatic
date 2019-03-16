@@ -1,0 +1,51 @@
+{
+  "elements": [
+    {"type": "ExpansionPanel", "caption": "Explanation",
+        "items": [
+            {"type": "Label", "label": "The position of a shutter on HomeMatic devices is calculated linearly on the basis of the set time and thus on the basis of the running time. However, this position does not have to correspond to the degree of actual opening, i.e. 25% running time is not equal to 25% opening. In order to achieve an exact approach to the correct opening, an assignment of position and corresponding running time must be made. Since the percentage opening degree with HM of 100% means 'Open' and 0% means 'Closed', but with 25% it is assumed that the roller shutter has only been lowered 1/4, the assignment is exactly the other way round." }
+        ]
+    },
+    {"type": "List",
+        "name": "Mapping",
+        "caption": "Mapping",
+        "rowCount": 6,
+        "add": false,
+        "delete": false,
+        "columns": [
+            {   "caption": "Position",
+                "name": "Position", 
+                "width": "75px",
+            }, 
+            {   "caption": "Level",
+                "name": "Level",
+                "width": "auto",
+                "edit": {
+                    "type": "NumberSpinner",
+                    "digits": 0,
+                    "suffix": "%"
+                }
+            }
+        ],
+        "values": [
+            {   "Position": "Auf (0%)",
+                "Level": "100"
+            },
+            {   "Position": "25 %",
+                "Level": "85"
+            },
+            {   "Position": "50 %",
+                "Level": "70"
+            },
+            {   "Position": "75 %",
+                "Level": "50"
+            },
+            {   "Position": "99 %",
+                "Level": "25"
+            },
+            {   "Position": "Zu (100%)",
+                "Level": "0"
+            }
+        ]
+    }
+  ]
+}
