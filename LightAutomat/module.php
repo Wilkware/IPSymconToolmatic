@@ -1,14 +1,6 @@
 <?php
 
-// --- BASE MESSAGE
-if (!defined('IPS_BASE')) {
-    define('IPS_BASE', 10000);
-}
-// --- VARIABLE MANAGER
-if (!defined('IPS_VARIABLEMESSAGE')) {
-    define('IPS_VARIABLEMESSAGE', IPS_BASE + 600);
-    define('VM_UPDATE', IPS_VARIABLEMESSAGE + 3);
-}
+require_once __DIR__.'/../libs/traits.php';  // Allgemeine Funktionen
 
 // CLASS LightAutomat
 class LightAutomat extends IPSModule
@@ -58,24 +50,24 @@ class LightAutomat extends IPSModule
             case VM_UPDATE:
                 // Safty Check
                 if ($senderID != $this->ReadPropertyInteger('StateVariable')) {
-                    $this->SendDebug('MessageSink', 'SenderID: '.$senderID.' unbekannt!', 0);
+                    $this->SendDebug('MessageSink', 'SenderID: '.$senderID.' unbekannt!');
                     break;
                 }
                 // Dauerbetrieb, tue nix!
                 $pid = $this->ReadPropertyInteger('PermanentVariable');
                 if ($pid != 0 && GetValue($pid)) {
-                    $this->SendDebug('MessageSink', 'Dauerbetrieb ist angeschalten!', 0);
+                    $this->SendDebug('MessageSink', 'Dauerbetrieb ist angeschalten!');
                     break;
                 }
 
                 if ($data[0] == true && $data[1] == true) { // OnChange auf TRUE, d.h. Angeschalten
-                    $this->SendDebug('MessageSink', 'OnChange auf TRUE - Angeschalten', 0);
+                    $this->SendDebug('MessageSink', 'OnChange auf TRUE - Angeschalten');
                     $this->SetTimerInterval('TriggerTimer', 1000 * 60 * $this->ReadPropertyInteger('Duration'));
                 } elseif ($data[0] == false && $data[1] == true) { // OnChange auf FALSE, d.h. Ausgeschalten
-                    $this->SendDebug('MessageSink', 'OnChange auf FALSE - Ausgeschalten', 0);
+                    $this->SendDebug('MessageSink', 'OnChange auf FALSE - Ausgeschalten');
                     $this->SetTimerInterval('TriggerTimer', 0);
                 } else { // OnChange - keine Zustandsaenderung
-                    $this->SendDebug('MessageSink', 'OnChange unveraendert - keine Zustandsaenderung', 0);
+                    $this->SendDebug('MessageSink', 'OnChange unveraendert - keine Zustandsaenderung');
                 }
             break;
           }
@@ -94,21 +86,21 @@ class LightAutomat extends IPSModule
             if ($this->ReadPropertyBoolean('OnlyScript') == false) {
                 $mid = $this->ReadPropertyInteger('MotionVariable');
                 if ($mid != 0 && GetValue($mid)) {
-                    $this->SendDebug('TLA_Trigger', 'Bewegungsmelder aktiv, also nochmal!', 0);
+                    $this->SendDebug('TLA_Trigger', 'Bewegungsmelder aktiv, also nochmal!');
 
                     return;
                 } else {
                     if ($this->ReadPropertyBoolean('OnlyBool') == true) {
                         SetValueBoolean($sv, false);
                     } else {
-                        $pid = IPS_GetParent($sv);
-                        $ret = @HM_WriteValueBoolean($pid, 'STATE', false); //Gerät ausschalten
+                        //$pid = IPS_GetParent($sv);
+                        //$ret = @HM_WriteValueBoolean($pid, 'STATE', false); //Gerät ausschalten
+                        $ret = @RequestAction($sv, false); //Gerät ausschalten
                         if ($ret === false) {
-                            $this->SendDebug('TLA_Trigger', 'Gerät konnte nicht ausgeschalten werden (UNREACH)!', 0);
+                            $this->SendDebug('TLA_Trigger', 'Gerät konnte nicht ausgeschalten werden (UNREACH)!');
                         }
                     }
-                    $this->SendDebug('TLA_Trigger', 'StateVariable (#'.$sv.') auf false geschalten!', 0);
-                    // WFC_PushNotification(xxxxx , 'Licht', '...wurde ausgeschalten!', '', 0);
+                    $this->SendDebug('TLA_Trigger', 'StateVariable (#'.$sv.') auf false geschalten!');
                 }
             }
             // Script ausführen
@@ -116,14 +108,14 @@ class LightAutomat extends IPSModule
                 if ($this->ReadPropertyInteger('ScriptVariable') != 0) {
                     if (IPS_ScriptExists($this->ReadPropertyInteger('ScriptVariable'))) {
                         $rs = IPS_RunScript($this->ReadPropertyInteger('ScriptVariable'));
-                        $this->SendDebug('Script Execute: Return Value', $rs, 0);
+                        $this->SendDebug('Script Execute: Return Value', $rs);
                     }
                 } else {
-                    $this->SendDebug('TLA_Trigger', 'Script #'.$this->ReadPropertyInteger('ScriptVariable').' existiert nicht!', 0);
+                    $this->SendDebug('TLA_Trigger', 'Script #'.$this->ReadPropertyInteger('ScriptVariable').' existiert nicht!');
                 }
             }
         } else {
-            $this->SendDebug('TLA_Trigger', 'STATE schon FALSE - Timer löschen!', 0);
+            $this->SendDebug('TLA_Trigger', 'STATE schon FALSE - Timer löschen!');
         }
         $this->SetTimerInterval('TriggerTimer', 0);
     }

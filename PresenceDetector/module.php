@@ -1,14 +1,6 @@
 <?php
 
-// --- BASE MESSAGE
-if (!defined('IPS_BASE')) {
-    define('IPS_BASE', 10000);
-}
-// --- VARIABLE MANAGER
-if (!defined('IPS_VARIABLEMESSAGE')) {
-    define('IPS_VARIABLEMESSAGE', IPS_BASE + 600);
-    define('VM_UPDATE', IPS_VARIABLEMESSAGE + 3);
-}
+require_once __DIR__.'/../libs/traits.php';  // Allgemeine Funktionen
 
 // CLASS PresenceDetector
 class PresenceDetector extends IPSModule
