@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/../libs/traits.php';  // Allgemeine Funktionen
+require_once __DIR__.'/../libs/traits.php';  // Allgemeine Funktionen
 
 // CLASS PresenceDetector
 class HumitidySensor extends IPSModule

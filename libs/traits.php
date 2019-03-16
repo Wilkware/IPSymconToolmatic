@@ -170,7 +170,6 @@ if (!defined('vtBoolean')) { //Nur wenn Konstanten noch nicht bekannt sind.
     define('vtString', 3);
 }
 
-
 /**
  * Helper class for create variable profiles.
  */
@@ -179,16 +178,16 @@ trait ProfileHelper
     /**
      * Create the profile for the given type, values and associations.
      *
-     * @param string $vartype        Type of the variable.
-     * @param string $name           Profil name.
-     * @param string $icon           Icon to display.
-     * @param string $prefix         Variable prefix.
-     * @param string $suffix         Variable suffix.
-     * @param int    $minvalue       Minimum value.
-     * @param int    $maxvalue       Maximum value.
-     * @param int    $stepsize       Increment.
-     * @param int    $digits         Decimal places.
-     * @param array  $associations   Associations of the values.
+     * @param string $vartype      Type of the variable.
+     * @param string $name         Profil name.
+     * @param string $icon         Icon to display.
+     * @param string $prefix       Variable prefix.
+     * @param string $suffix       Variable suffix.
+     * @param int    $minvalue     Minimum value.
+     * @param int    $maxvalue     Maximum value.
+     * @param int    $stepsize     Increment.
+     * @param int    $digits       Decimal places.
+     * @param array  $associations Associations of the values.
      */
     protected function RegisterProfile($vartype, $name, $icon, $prefix = '', $suffix = '', $minvalue = 0, $maxvalue = 0, $stepsize = 0, $digits = 0, $associations = null)
     {
@@ -215,8 +214,8 @@ trait ProfileHelper
     /**
      * Create the profile for the given type with the passed name.
      *
-     * @param string $name           Profil name.
-     * @param string $vartype        Type of the variable.
+     * @param string $name    Profil name.
+     * @param string $vartype Type of the variable.
      */
     protected function RegisterProfileType($name, $vartype)
     {
@@ -233,11 +232,11 @@ trait ProfileHelper
     /**
      * Create a profile for boolean values.
      *
-     * @param string $name           Profil name.
-     * @param string $icon           Icon to display.
-     * @param string $prefix         Variable prefix.
-     * @param string $suffix         Variable suffix.
-     * @param array  $asso           Associations of the values.
+     * @param string $name   Profil name.
+     * @param string $icon   Icon to display.
+     * @param string $prefix Variable prefix.
+     * @param string $suffix Variable suffix.
+     * @param array  $asso   Associations of the values.
      */
     protected function RegisterProfileBoolean($name, $icon, $prefix, $suffix, $asso)
     {
@@ -246,7 +245,7 @@ trait ProfileHelper
         IPS_SetVariableProfileIcon($name, $icon);
         IPS_SetVariableProfileText($name, $prefix, $suffix);
 
-        if(($asso !== null) && (sizeof($asso) !== 0)){
+        if (($asso !== null) && (count($asso) !== 0)) {
             foreach ($asso as $ass) {
                 IPS_SetVariableProfileAssociation($name, $ass[0], $ass[1], $ass[2], $ass[3]);
             }
@@ -256,15 +255,15 @@ trait ProfileHelper
     /**
      * Create a profile for integer values.
      *
-     * @param string $name           Profil name.
-     * @param string $icon           Icon to display.
-     * @param string $prefix         Variable prefix.
-     * @param string $suffix         Variable suffix.
-     * @param int    $minvalue       Minimum value.
-     * @param int    $maxvalue       Maximum value.
-     * @param int    $stepsize       Increment.
-     * @param int    $digits         Decimal places.
-     * @param array  $asso           Associations of the values.
+     * @param string $name     Profil name.
+     * @param string $icon     Icon to display.
+     * @param string $prefix   Variable prefix.
+     * @param string $suffix   Variable suffix.
+     * @param int    $minvalue Minimum value.
+     * @param int    $maxvalue Maximum value.
+     * @param int    $stepsize Increment.
+     * @param int    $digits   Decimal places.
+     * @param array  $asso     Associations of the values.
      */
     protected function RegisterProfileInteger($name, $icon, $prefix, $suffix, $minvalue, $maxvalue, $stepsize, $digits, $asso)
     {
@@ -274,13 +273,13 @@ trait ProfileHelper
         IPS_SetVariableProfileText($name, $prefix, $suffix);
         IPS_SetVariableProfileDigits($name, $digits);
 
-        if(($asso !== null) && (sizeof($asso) !== 0)){
+        if (($asso !== null) && (count($asso) !== 0)) {
             $minvalue = 0;
             $maxvalue = 0;
         }
         IPS_SetVariableProfileValues($name, $minvalue, $maxvalue, $stepsize);
 
-        if(($asso !== null) && (sizeof($asso) !== 0)){
+        if (($asso !== null) && (count($asso) !== 0)) {
             foreach ($asso as $ass) {
                 IPS_SetVariableProfileAssociation($name, $ass[0], $ass[1], $ass[2], $ass[3]);
             }
@@ -290,15 +289,15 @@ trait ProfileHelper
     /**
      * Create a profile for float values.
      *
-     * @param string $name           Profil name.
-     * @param string $icon           Icon to display.
-     * @param string $prefix         Variable prefix.
-     * @param string $suffix         Variable suffix.
-     * @param int    $minvalue       Minimum value.
-     * @param int    $maxvalue       Maximum value.
-     * @param int    $stepsize       Increment.
-     * @param int    $digits         Decimal places.
-     * @param array  $asso           Associations of the values.
+     * @param string $name     Profil name.
+     * @param string $icon     Icon to display.
+     * @param string $prefix   Variable prefix.
+     * @param string $suffix   Variable suffix.
+     * @param int    $minvalue Minimum value.
+     * @param int    $maxvalue Maximum value.
+     * @param int    $stepsize Increment.
+     * @param int    $digits   Decimal places.
+     * @param array  $asso     Associations of the values.
      */
     protected function RegisterProfileFloat($name, $icon, $prefix, $suffix, $minvalue, $maxvalue, $stepsize, $digits, $asso)
     {
@@ -308,13 +307,13 @@ trait ProfileHelper
         IPS_SetVariableProfileText($name, $prefix, $suffix);
         IPS_SetVariableProfileDigits($name, $digits);
 
-        if(($asso !== null) && (sizeof($asso) !== 0)){
+        if (($asso !== null) && (count($asso) !== 0)) {
             $minvalue = 0;
             $maxvalue = 0;
         }
         IPS_SetVariableProfileValues($name, $minvalue, $maxvalue, $stepsize);
 
-        if(($asso !== null) && (sizeof($asso) !== 0)){
+        if (($asso !== null) && (count($asso) !== 0)) {
             foreach ($asso as $ass) {
                 IPS_SetVariableProfileAssociation($name, $ass[0], $ass[1], $ass[2], $ass[3]);
             }
@@ -324,10 +323,10 @@ trait ProfileHelper
     /**
      * Create a profile for string values.
      *
-     * @param string $name           Profil name.
-     * @param string $icon           Icon to display.
-     * @param string $prefix         Variable prefix.
-     * @param string $suffix         Variable suffix.
+     * @param string $name   Profil name.
+     * @param string $icon   Icon to display.
+     * @param string $prefix Variable prefix.
+     * @param string $suffix Variable suffix.
      */
     protected function RegisterProfileString($name, $icon, $prefix, $suffix)
     {
@@ -339,19 +338,19 @@ trait ProfileHelper
 }
 
 /**
- * Helper class to create timer and events. 
+ * Helper class to create timer and events.
  */
 trait TimerHelper
 {
     /**
      * Create a cyclic timer.
      *
-     * @param string $ident          Name and ident of the timer.
-     * @param int    $hour           Start hour.
-     * @param int    $minute         Start minute.
-     * @param int    $second         Start second.
-     * @param int    $script         Script ID.
-     * @param bool   $active         True to activate the timer, oterwise false.
+     * @param string $ident  Name and ident of the timer.
+     * @param int    $hour   Start hour.
+     * @param int    $minute Start minute.
+     * @param int    $second Start second.
+     * @param int    $script Script ID.
+     * @param bool   $active True to activate the timer, oterwise false.
      */
     protected function RegisterCyclicTimer($ident, $hour, $minute, $second, $script, $active)
     {
@@ -377,30 +376,29 @@ trait TimerHelper
         IPS_SetEventCyclicTimeFrom($id, $hour, $minute, $second);
         IPS_SetEventActive($id, $active);
     }
-
 }
 
 /**
- * Helper class for the debug output. 
+ * Helper class for the debug output.
  */
 trait DebugHelper
 {
     /**
      * Adds functionality to serialize arrays and objects.
      *
-     * @param string $msg            Title of the debug message.
-     * @param mixed  $data           Data output.
-     * @param int    $format         Output format.
+     * @param string $msg    Title of the debug message.
+     * @param mixed  $data   Data output.
+     * @param int    $format Output format.
      */
     protected function SendDebug($msg, $data, $format = 0)
     {
         if (is_object($data)) {
             foreach ($data as $key => $value) {
-                $this->SendDebug($msg . ':' . $key, $value, 1);
+                $this->SendDebug($msg.':'.$key, $value, 1);
             }
         } elseif (is_array($data)) {
             foreach ($data as $key => $value) {
-                $this->SendDebug($msg . ':' . $key, $value, 0);
+                $this->SendDebug($msg.':'.$key, $value, 0);
             }
         } elseif (is_bool($data)) {
             parent::SendDebug($msg, ($data ? 'TRUE' : 'FALSE'), 0);
