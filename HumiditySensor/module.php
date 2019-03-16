@@ -61,16 +61,16 @@ class HumitidySensor extends IPSModule
         $association = [
             [-500, '%0.2f %%', 'Window-100', 32768],
             [0, '%0.2f %%', 'Window-100', 32768],
-            [0,01, '+%0.2f %%', 'Window-100', 16744448],
+            [0, 01, '+%0.2f %%', 'Window-100', 16744448],
             [10, '+%0.2f %%', 'Window-0', 16711680],
         ];
         $this->RegisterProfile(IPSVarType::vtFloat, 'THS.Difference', 'Window', '', '', 0, 0, 0, 2, $association);
 
-         // Ergebnis & Hinweis & Differenz
+        // Ergebnis & Hinweis & Differenz
         $this->RegisterVariable(IPSVarType::vtBoolean, 'Hinweis', 'Hint', 'THS.AirOrNot', 1, true);
         $this->RegisterVariable(IPSVarType::vtString, 'Ergebnis', 'Result', '', 2, true);
 //        $this->RegisterVariable(IPSVarType::vtFloat, 'Differenz', 'Difference', 'THS.Difference', 3, true);
-        $this->MaintainVariable('Difference', 'Differenz', IPSVarType::vtFloat, "THS.Difference", 3, true);
+        $this->MaintainVariable('Difference', 'Differenz', IPSVarType::vtFloat, 'THS.Difference', 3, true);
         // Taupunkt
         $create = $this->ReadPropertyBoolean('CreateDewPoint');
         $this->RegisterVariable(IPSVarType::vtFloat, 'Taupunkt Aussen', 'DewPointOutdoor', '~Temperature', 4, $create);
