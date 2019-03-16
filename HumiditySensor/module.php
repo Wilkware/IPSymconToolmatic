@@ -189,10 +189,10 @@ class HumitidySensor extends IPSModule
             $result = round((100 - $wcy) * 100) / 100 .'% trockener! Draussen ist es feuchter!';
             $hint = false;
         } elseif ($wcy <= 110) {
-            $result = 'Zwar ist es innen '. $difference .'% feuchter, aber es lohnt nicht zu lüften!';
+            $result = 'Zwar ist es innen '.$difference.'% feuchter, aber es lohnt nicht zu lüften!';
             $hint = false;
         } else {
-            $result = 'Innen ist es '. $difference .'% feuchter!';
+            $result = 'Innen ist es '.$difference.'% feuchter!';
             $hint = true;
         }
         $this->SetValue('Result', $result);
