@@ -5,6 +5,8 @@ require_once __DIR__.'/../libs/traits.php';  // Allgemeine Funktionen
 // CLASS PresenceDetector
 class PresenceDetector extends IPSModule
 {
+    use DebugHelper;
+
     public function Create()
     {
         //Never delete this line!
@@ -47,16 +49,16 @@ class PresenceDetector extends IPSModule
             case VM_UPDATE:
                 if ($senderID != $this->ReadPropertyInteger('MotionVariable')) {
                     // Safety Check
-                    $this->SendDebug('MessageSink', $senderID.' unbekannt!', 0);
+                    $this->SendDebug('MessageSink', $senderID.' unbekannt!');
                     break;
                 }
                 if ($data[0] == true && $data[1] == true) { // OnChange auf TRUE, d.h. Bewegung erkannt
-                    $this->SendDebug('MessageSink', 'OnChange auf TRUE - Bewegung erkannt', 0);
+                    $this->SendDebug('MessageSink', 'OnChange auf TRUE - Bewegung erkannt');
                     $this->SwitchState();
                 } elseif ($data[0] == false && $data[1] == true) { // OnChange auf FALSE, d.h. keine Bewegung
-                    $this->SendDebug('MessageSink', 'OnChange auf FALSE - keine Bewegung', 0);
+                    $this->SendDebug('MessageSink', 'OnChange auf FALSE - keine Bewegung');
                 } else { // OnChange auf FALSE, d.h. keine Bewegung
-                    $this->SendDebug('MessageSink', 'OnChange unveraendert - keine Zustandsaenderung', 0);
+                    $this->SendDebug('MessageSink', 'OnChange unveraendert - keine Zustandsaenderung');
                 }
             break;
         }
@@ -75,11 +77,11 @@ class PresenceDetector extends IPSModule
             $bv = GetValue($this->ReadPropertyInteger('BrightnessVariable'));
             $tv = $this->ReadPropertyInteger('ThresholdValue');
             if ($tv != 0 && $bv > $tv) {
-                $this->SendDebug('SwitchState', 'Oberhalb Schwellwert: '.$bv.'(Schwellwert: '.$tv.')', 0);
+                $this->SendDebug('SwitchState', 'Oberhalb Schwellwert: '.$bv.'(Schwellwert: '.$tv.')');
 
                 return; // nix zu tun
             }
-            $this->SendDebug('SwitchState', 'Immer oder unterhalb Schwellwert: '.$bv.' (Schwellwert: '.$tv.')', 0);
+            $this->SendDebug('SwitchState', 'Immer oder unterhalb Schwellwert: '.$bv.' (Schwellwert: '.$tv.')');
         }
         // Variable schalten
         if ($this->ReadPropertyInteger('SwitchVariable') != 0) {
@@ -87,19 +89,20 @@ class PresenceDetector extends IPSModule
             if ($this->ReadPropertyBoolean('OnlyBool') == true) {
                 SetValueBoolean($sv, true);
             } else {
-                $pid = IPS_GetParent($sv);
-                $ret = @HM_WriteValueBoolean($pid, 'STATE', true); //Gerät einschalten
+                //$pid = IPS_GetParent($sv);
+                //$ret = @HM_WriteValueBoolean($pid, 'STATE', true); //Gerät einschalten
+                $ret = @RequestAction($sv, true); //Gerät einschalten
                 if ($ret === false) {
-                    $this->SendDebug('SwitchState', 'Gerät konnte nicht eingeschalten werden (UNREACH)!', 0);
+                    $this->SendDebug('SwitchState', 'Gerät konnte nicht eingeschalten werden (UNREACH)!');
                 }
             }
-            $this->SendDebug('SwitchState', 'Variable (#'.$sv.') auf true geschalten!', 0);
+            $this->SendDebug('SwitchState', 'Variable (#'.$sv.') auf true geschalten!');
         }
         // Script ausführen
         if ($this->ReadPropertyInteger('ScriptVariable') != 0) {
             if (IPS_ScriptExists($this->ReadPropertyInteger('ScriptVariable'))) {
                 $sr = IPS_RunScript($this->ReadPropertyInteger('ScriptVariable'));
-                $this->SendDebug('SwitchState', 'Script Return Value: '.$rs, 0);
+                $this->SendDebug('SwitchState', 'Script Return Value: '.$rs);
             }
         }
     }
