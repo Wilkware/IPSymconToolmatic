@@ -227,9 +227,17 @@ class HumitidySensor extends IPSModule
         IPS_ApplyChanges($this->InstanceID);
     }
 
-    public function SetMessageThreshold($id, $threshold)
+    /**
+     * This function will be available automatically after the module is imported with the module control.
+     * Using the custom prefix this function will be callable from PHP and JSON-RPC through:.
+     *
+     * TSH_SetMessageThreshold($id, $threshold);
+     *
+     * @param int MessageThreshold Schwellert einstellen.
+     */
+    public function SetMessageThreshold(int $threshold)
     {
-        IPS_SetProperty($this->InstanceID, 'MessageThreshold', $duration);
+        IPS_SetProperty($this->InstanceID, 'MessageThreshold', $threshold);
         IPS_ApplyChanges($this->InstanceID);
     }
 }

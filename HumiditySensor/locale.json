@@ -18,7 +18,9 @@
         "Create variables for indoor and outdoor dewpoint?": "Sollen die Variablen für Aussen- und Innentaupunkt angelegt werden?",
         "Create variables for indoor and outdoor water content?": "Sollen die Variablen für Aussen- und Innenwassergehalt der Luft angelegt werden?",
         "Calculate values!": "Werte berechnen!",
-        "CALCULATE": "BERECHNEN"
+        "CALCULATE": "BERECHNEN",
+        "Send messages only when the following threshold value is exceeded.": "Nachrichten erst senden bei Überschreiten folgenden Schwellwertes.",
+        "Difference (Threshold):": "Differenz (Schwellwert):"
     }
   }
 }
