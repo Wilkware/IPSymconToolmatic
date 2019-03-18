@@ -7,14 +7,14 @@
     },
     {"type": "List",
         "name": "Mapping",
-        "caption": "Mapping",
+        "caption": "Mapping:",
         "rowCount": 6,
         "add": false,
         "delete": false,
         "columns": [
             {   "caption": "Position",
                 "name": "Position", 
-                "width": "100px",
+                "width": "100px"
             }, 
             {   "caption": "Level",
                 "name": "Level",
