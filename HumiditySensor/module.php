@@ -23,6 +23,7 @@ class HumitidySensor extends IPSModule
         $this->RegisterPropertyString('RoomName', 'Unknown');
         $this->RegisterPropertyInteger('LifeTime', 0);
         // Settings
+        $this->RegisterPropertyInteger('MessageThreshold', 100);
         $this->RegisterPropertyInteger('UpdateTimer', 15);
         $this->RegisterPropertyBoolean('CreateDewPoint', true);
         $this->RegisterPropertyBoolean('CreateWaterContent', true);
@@ -140,40 +141,40 @@ class HumitidySensor extends IPSModule
             $bi = $bo;
         }
 
+        // universelle Gaskonstante in J/(kmol*K) 
         $rg = 8314.3;
+        // Molekulargewicht des Wasserdampfes in kg
         $m = 18.016;
+        // Umrechnung in Kelvin
         $ko = $to + 273.15;
         $ki = $ti + 273.15;
-
+        // Berechnung Sättigung Dampfdruck in hPa 
         $so = 6.1078 * pow(10, (($ao * $to) / ($bo + $to)));
         $si = 6.1078 * pow(10, (($ai * $ti) / ($bi + $ti)));
-
-        // DewPoint
+        // Dampfdruck in hPa
         $do = ($ho / 100) * $so;
         $di = ($hi / 100) * $si;
-
+        // Berechnung Taupunkt Aussen
         $vo = log10($do / 6.1078);
         $dpo = $bo * $vo / ($ao - $vo);
-
+        // Berechnung Taupunkt Innen
         $vi = log10($di / 6.1078);
         $dpi = $bi * $vi / ($ai - $vi);
-
+        // Speichern Taupunkt?
         $update = $this->ReadPropertyBoolean('CreateDewPoint');
         if ($update == true) {
             $this->SetValue('DewPointOutdoor', $dpo);
             $this->SetValue('DewPointIndoor', $dpi);
         }
-
         // WaterContent
         $wco = pow(10, 5) * $m / $rg * $do / $ko;
         $wci = pow(10, 5) * $m / $rg * $di / $ki;
-
+        // Speichern Wassergehalt?
         $update = $this->ReadPropertyBoolean('CreateWaterContent');
         if ($update == true) {
             $this->SetValue('WaterContentOutdoor', $wco);
             $this->SetValue('WaterContentIndoor', $wci);
         }
-
         // Result (diff out / in)
         $wc = $wco - $wci;
         $wcy = ($wci / $wco) * 100;
@@ -225,4 +226,10 @@ class HumitidySensor extends IPSModule
         IPS_SetProperty($this->InstanceID, 'UpdateTimer', $duration);
         IPS_ApplyChanges($this->InstanceID);
     }
+    
+    public function SetMessageThreshold($id, $threshold)
+    {
+        IPS_SetProperty($this->InstanceID, 'MessageThreshold', $duration);
+        IPS_ApplyChanges($this->InstanceID);
+    }    
 }

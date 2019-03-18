@@ -28,7 +28,8 @@
                 {"label": "60 min", "value": 60 },
                 {"label": "2 h", "value": 120 }
               ]
-            }
+            },
+            {"type": "ValidationTextBox", "name": "RoomName", "caption": "Room name:" }
         ]
     },
     {"type": "Label", "label": "Advanced settings:" },
@@ -46,7 +47,9 @@
   ],
   "actions":
   [
-    {"type": "Label", "label": "Werte berechnen!" },
+    {"type": "Label", "label": "Send messages only when the following threshold value is exceeded." },
+    {"type": "HorizontalSlider", "name": "Threshold", "caption": "Difference (Threshold):", "minimum": 0, "maximum": 200, "onChange": "THS_SetMessageThreshold($id, $Threshold);" },
+    {"type": "Label", "label": "Calculate values!" },
     {"type": "Button", "label": "BERECHNEN", "onClick": "THS_Update($id);" }
   ]
 }
