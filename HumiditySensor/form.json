@@ -28,8 +28,7 @@
                 {"label": "60 min", "value": 60 },
                 {"label": "2 h", "value": 120 }
               ]
-            },
-            {"type": "ValidationTextBox", "name": "RoomName", "caption": "Room name:" }
+            }
         ]
     },
     {"type": "Label", "label": "Advanced settings:" },
