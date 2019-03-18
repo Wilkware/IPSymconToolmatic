@@ -141,14 +141,14 @@ class HumitidySensor extends IPSModule
             $bi = $bo;
         }
 
-        // universelle Gaskonstante in J/(kmol*K) 
+        // universelle Gaskonstante in J/(kmol*K)
         $rg = 8314.3;
         // Molekulargewicht des Wasserdampfes in kg
         $m = 18.016;
         // Umrechnung in Kelvin
         $ko = $to + 273.15;
         $ki = $ti + 273.15;
-        // Berechnung Sättigung Dampfdruck in hPa 
+        // Berechnung Sättigung Dampfdruck in hPa
         $so = 6.1078 * pow(10, (($ao * $to) / ($bo + $to)));
         $si = 6.1078 * pow(10, (($ai * $ti) / ($bi + $ti)));
         // Dampfdruck in hPa
@@ -226,10 +226,10 @@ class HumitidySensor extends IPSModule
         IPS_SetProperty($this->InstanceID, 'UpdateTimer', $duration);
         IPS_ApplyChanges($this->InstanceID);
     }
-    
+
     public function SetMessageThreshold($id, $threshold)
     {
         IPS_SetProperty($this->InstanceID, 'MessageThreshold', $duration);
         IPS_ApplyChanges($this->InstanceID);
-    }    
+    }
 }
