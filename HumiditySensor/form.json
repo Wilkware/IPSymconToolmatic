@@ -47,7 +47,7 @@
   "actions":
   [
     {"type": "Label", "label": "Send messages only when the following threshold value is exceeded." },
-    {"type": "HorizontalSlider", "name": "Threshold", "caption": "Difference (Threshold):", "minimum": 0, "maximum": 200, "onChange": "THS_SetMessageThreshold($id, $Threshold);" },
+    {"type": "HorizontalSlider", "name": "Threshold", "caption": "Difference (Threshold):", "minimum": 0, "maximum": 200, "onChange": "THS_MessageThreshold($id, $Threshold);" },
     {"type": "Label", "label": "Calculate values!" },
     {"type": "Button", "label": "BERECHNEN", "onClick": "THS_Update($id);" }
   ]

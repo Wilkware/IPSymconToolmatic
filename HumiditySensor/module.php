@@ -235,7 +235,7 @@ class HumitidySensor extends IPSModule
      *
      * @param int MessageThreshold Schwellert einstellen.
      */
-    public function SetMessageThreshold(int $threshold)
+    public function MessageThreshold(int $threshold)
     {
         IPS_SetProperty($this->InstanceID, 'MessageThreshold', $threshold);
         IPS_ApplyChanges($this->InstanceID);
