@@ -195,7 +195,8 @@ class HumitidySensor extends IPSModule
         $this->SetValue('Difference', $difference);
 
         $scriptId = $this->ReadPropertyInteger('ScriptMessage');
-        if ($scriptId != 0 && $hint == true) {
+        $threshold = $this->ReadPropertyInteger('MessageThreshold');
+        if ($scriptId != 0 && $hint == true && $difference > $threshold) {
             $room = $this->ReadPropertyString('RoomName');
             $time = $this->ReadPropertyInteger('LifeTime');
             $time = $time * 60;
