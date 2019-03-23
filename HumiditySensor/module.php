@@ -100,7 +100,9 @@ class HumitidySensor extends IPSModule
         if ($ho != 0) {
             $ho = GetValue($ho);
             // Kann man bestimmt besser lösen
-            if($ho < 1) $ho = $ho * 100.;
+            if ($ho < 1) {
+                $ho = $ho * 100.;
+            }
         } else {
             $this->SendDebug('UPDATE', 'Humidity Outdoor not set!');
             $state = false;
@@ -118,7 +120,9 @@ class HumitidySensor extends IPSModule
         if ($hi != 0) {
             $hi = GetValue($hi);
             // Kann man bestimmt besser lösen
-            if($hi < 1) $hi = $hi * 100.;
+            if ($hi < 1) {
+                $hi = $hi * 100.;
+            }
         } else {
             $this->SendDebug('UPDATE', 'Humidity Indoor not set!');
             $state = false;
