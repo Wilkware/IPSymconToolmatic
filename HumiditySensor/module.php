@@ -92,15 +92,17 @@ class HumitidySensor extends IPSModule
         if ($to != 0) {
             $to = GetValue($to);
         } else {
-            $this->SendDebug('UPDATE', 'Temperature Outdoor not set!', 0);
+            $this->SendDebug('UPDATE', 'Temperature Outdoor not set!');
             $state = false;
         }
-        // Humidity Outddoor
+        // Humidity Outdoor
         $ho = $this->ReadPropertyInteger('HumyOutdoor');
         if ($ho != 0) {
             $ho = GetValue($ho);
+            // Kann man bestimmt besser lösen
+            if($ho < 1) $ho = $ho * 100.;
         } else {
-            $this->SendDebug('UPDATE', 'Humidity Outdoor not set!', 0);
+            $this->SendDebug('UPDATE', 'Humidity Outdoor not set!');
             $state = false;
         }
         // Temp indoor
@@ -108,15 +110,17 @@ class HumitidySensor extends IPSModule
         if ($ti != 0) {
             $ti = GetValue($ti);
         } else {
-            $this->SendDebug('UPDATE', 'Temperature Indoor not set!', 0);
+            $this->SendDebug('UPDATE', 'Temperature Indoor not set!');
             $state = false;
         }
-        // Humidity Outddoor
+        // Humidity Indoor
         $hi = $this->ReadPropertyInteger('HumyIndoor');
         if ($hi != 0) {
             $hi = GetValue($hi);
+            // Kann man bestimmt besser lösen
+            if($hi < 1) $hi = $hi * 100.;
         } else {
-            $this->SendDebug('UPDATE', 'Humidity Indoor not set!', 0);
+            $this->SendDebug('UPDATE', 'Humidity Indoor not set!');
             $state = false;
         }
         // All okay
