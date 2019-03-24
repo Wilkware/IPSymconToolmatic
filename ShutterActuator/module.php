@@ -60,7 +60,7 @@ class ShutterActuator extends IPSModule
      */
     public function MessageSink($timeStamp, $senderID, $message, $data)
     {
-        //$this->SendDebug('MessageSink', 'SenderId: '. $senderID . ' Data: ' . print_r($data, true), 0);
+        //$this->SendDebug('MessageSink', 'SenderId: '.$senderID.' Data: '.print_r($data, true), 0);
         switch ($message) {
             case VM_UPDATE:
                 // ReceiverVariable
@@ -156,7 +156,7 @@ class ShutterActuator extends IPSModule
         if ($vid != 0) {
             $level = GetValue($vid);
             $this->SendDebug('Level', 'Aktuelle interne Position ist: '.$level);
-            
+
             return sprintf('%.2f', $level);
         } else {
             $this->SendDebug('Level', 'Variable zum auslesen der Rollladenposition nicht gesetzt!');
@@ -164,7 +164,7 @@ class ShutterActuator extends IPSModule
             return '-1';
         }
     }
-    
+
     /**
      * Map Level to Position.
      *
@@ -174,7 +174,7 @@ class ShutterActuator extends IPSModule
     {
         // Position Variable
         $id = $this->GetIDForIdent('Position');
-        // Mapping values   
+        // Mapping values
         $pos000 = $this->ReadPropertyFloat('Position0');
         $pos025 = $this->ReadPropertyFloat('Position25');
         $pos050 = $this->ReadPropertyFloat('Position50');
