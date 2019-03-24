@@ -44,7 +44,7 @@ class ShutterActuator extends IPSModule
         ];
         $this->RegisterProfile(vtInteger, 'HM.ShutterActuator', 'Jalousie', '', '', 0, 100, 0, 0, $association);
         // Position
-        $this->MaintainVariable('Position', 'Position', vtFloat, '', 1, true);
+        $this->MaintainVariable('Position', 'Position', vtFloat, 'HM.ShutterActuator', 1, true);
         // Create our trigger
         if (IPS_VariableExists($this->ReadPropertyInteger('ReceiverVariable'))) {
             $this->RegisterMessage($this->ReadPropertyInteger('ReceiverVariable'), VM_UPDATE);
@@ -60,20 +60,32 @@ class ShutterActuator extends IPSModule
      */
     public function MessageSink($timeStamp, $senderID, $message, $data)
     {
-        $this->SendDebug('MessageSink', 'SenderId: '. $senderID . ' Data: ' . print_r($data, true), 0);
+        //$this->SendDebug('MessageSink', 'SenderId: '. $senderID . ' Data: ' . print_r($data, true), 0);
         switch ($message) {
             case VM_UPDATE:
-                // Safty Check
-                if ($senderID != $this->ReadPropertyInteger('ReceiverVariable')) {
+                // ReceiverVariable
+                if ($senderID == $this->ReadPropertyInteger('ReceiverVariable')) {
                     $this->SendDebug('MessageSink', 'SenderID: '.$senderID.' unbekannt!');
-                    break;
+                    // Aenderungen auslesen
+                    if ($data[1] == true) { // OnChange - neuer Wert?
+                        $this->SendDebug('MessageSink', 'Level: '.$data[2].' => '.$data[0].);
+                        $this->LevelToPosition($data[0]);
+                    } else { // OnChange - keine Zustandsaenderung
+                        $this->SendDebug('MessageSink', 'Level unveraendert - keine Wertaenderung');
+                    }
                 }
-                // Aenderungen auslesen
-                if ($data[1] == true) { // OnChange - neuer Wert?
-                    $this->SendDebug('MessageSink', 'Level von: '.$data[2].' auf: '.$data[0].' geändert!');
-                    $this->LevelToPosition($data[0]);
-                } else { // OnChange - keine Zustandsaenderung
-                    $this->SendDebug('MessageSink', 'OnChange unveraendert - keine Zustandsaenderung');
+                // Position Variable
+                $id = $this->GetIDForIdent('Position');
+                if ($senderID != $id) {
+                    $this->SendDebug('MessageSink', 'SenderID: '.$senderID.' unbekannt!');
+                } else {
+                  // Aenderungen auslesen
+                  if ($data[1] == true) { // OnChange - neuer Wert?
+                      $this->SendDebug('MessageSink', 'Position: '.$data[2].' => '.$data[0].);
+                      //$this->LevelToPosition($data[0]);
+                  } else { // OnChange - keine Zustandsaenderung
+                      $this->SendDebug('MessageSink', 'Position unveraendert - keine Wertaenderung');
+                  }
                 }
             break;
           }
@@ -146,8 +158,7 @@ class ShutterActuator extends IPSModule
             $this->SendDebug('Level', 'Aktuelle interne Position ist: '.$level);
             
             return sprintf('%.2f', $level);
-        }
-        else {
+        } else {
             $this->SendDebug('Level', 'Variable zum auslesen der Rollladenposition nicht gesetzt!');
 
             return '-1';
