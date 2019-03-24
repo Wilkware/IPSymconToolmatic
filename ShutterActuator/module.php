@@ -68,7 +68,7 @@ class ShutterActuator extends IPSModule
                     $this->SendDebug('MessageSink', 'SenderID: '.$senderID.' unbekannt!');
                     // Aenderungen auslesen
                     if ($data[1] == true) { // OnChange - neuer Wert?
-                        $this->SendDebug('MessageSink', 'Level: '.$data[2].' => '.$data[0].);
+                        $this->SendDebug('MessageSink', 'Level: '.$data[2].' => '.$data[0]);
                         $this->LevelToPosition($data[0]);
                     } else { // OnChange - keine Zustandsaenderung
                         $this->SendDebug('MessageSink', 'Level unveraendert - keine Wertaenderung');
@@ -81,7 +81,7 @@ class ShutterActuator extends IPSModule
                 } else {
                   // Aenderungen auslesen
                   if ($data[1] == true) { // OnChange - neuer Wert?
-                      $this->SendDebug('MessageSink', 'Position: '.$data[2].' => '.$data[0].);
+                      $this->SendDebug('MessageSink', 'Position: '.$data[2].' => '.$data[0]);
                       //$this->LevelToPosition($data[0]);
                   } else { // OnChange - keine Zustandsaenderung
                       $this->SendDebug('MessageSink', 'Position unveraendert - keine Wertaenderung');
