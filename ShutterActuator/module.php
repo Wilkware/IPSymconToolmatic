@@ -40,7 +40,7 @@ class ShutterActuator extends IPSModule
             [50, '50 %%', '', 0x00FF00],
             [75, '75 %%', '', 0x00FF00],
             [99, '99 %%', '', 0x00FF00],
-            [100, 'Zu', '', 0xFFFFFF],
+            [100, 'Zu', '', -1],
         ];
         $this->RegisterProfile(vtInteger, 'HM.ShutterActuator', 'Jalousie', '', '', 0, 100, 0, 0, $association);
         // Position
@@ -91,7 +91,8 @@ class ShutterActuator extends IPSModule
         //$this->SendDebug('RequestAction', 'Ident: '.$ident.' Value: '.$value, 0);
         switch ($ident) {
             case 'Position':
-                $this->LevelToPosition($value);
+                $this->SendDebug('RequestAction', 'Neue Position gewählt: '.$value, 0);
+                $this->PositionToLevel($value);
                 break;
             default:
                 throw new Exception('Invalid Ident');
@@ -204,6 +205,7 @@ class ShutterActuator extends IPSModule
             $pos = 0;
         }
         // Zuordnen
+        $this->SendDebug('LevelToPosition', 'Level '.$level.' erreicht, d.h. Position: '.$pos);
         SetValue($id, $pos);
     }
 
@@ -245,6 +247,7 @@ class ShutterActuator extends IPSModule
             default:
                 $level = $pos100;
         }
+        $this->SendDebug('PositionToLevel', 'Fahre auf Position: '.$position.', d.h. Level: '.$level);
         RequestAction($vid, $level);
     }
 }
