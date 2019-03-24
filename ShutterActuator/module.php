@@ -134,7 +134,7 @@ class ShutterActuator extends IPSModule
      * This function will be available automatically after the module is imported with the module control.
      * Using the custom prefix this function will be callable from PHP and JSON-RPC through:.
      *
-     * TSA_GetPosition($id);
+     * TSA_Level($id);
      *
      * @return float The actual internal level (position).
      */
@@ -187,6 +187,5 @@ class ShutterActuator extends IPSModule
         }
         // Zuordnen
         SetValue($id, $pos);
-    	}
     }
 }
