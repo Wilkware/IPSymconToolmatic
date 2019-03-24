@@ -27,12 +27,58 @@ class ShutterActuator extends IPSModule
 
     public function ApplyChanges()
     {
-        //Never delete this line!
+        // Trigger???
+        if ($this->ReadPropertyInteger('ReceiverVariable') != 0) {
+            $this->UnregisterMessage($this->ReadPropertyInteger('ReceiverVariable'), VM_UPDATE);
+        }
+        // Never delete this line!
         parent::ApplyChanges();
+        // Variable Profile
+        $association = [
+            [0, 'Auf', '', 0x00FF00],
+            [25, '25 %%', '', 0x00FF00],
+            [50, '50 %%', '', 0x00FF00],
+            [75, '75 %%', '', 0x00FF00],
+            [99, '99 %%', '', 0x00FF00],
+            [100, 'Zu', '', 0xFFFFFF],
+        ];
+        $this->RegisterProfile(vtInteger, 'HM.ShutterActuator', 'Jalousie', '', '', 0, 100, 0, 0, $association);
         // Position
         $this->MaintainVariable('Position', 'Position', vtFloat, '', 1, true);
+        // Create our trigger
+        if (IPS_VariableExists($this->ReadPropertyInteger('ReceiverVariable'))) {
+            $this->RegisterMessage($this->ReadPropertyInteger('ReceiverVariable'), VM_UPDATE);
+        }
     }
     
+    /**
+     * Interne Funktion des SDK.
+     * data[0] = neuer Wert
+     * data[1] = wurde Wert geändert?
+     * data[2] = alter Wert
+     * data[3] = Timestamp.
+     */
+    public function MessageSink($timeStamp, $senderID, $message, $data)
+    {
+        $this->SendDebug('MessageSink', 'SenderId: '. $senderID . ' Data: ' . print_r($data, true), 0);
+        switch ($message) {
+            case VM_UPDATE:
+                // Safty Check
+                if ($senderID != $this->ReadPropertyInteger('ReceiverVariable')) {
+                    $this->SendDebug('MessageSink', 'SenderID: '.$senderID.' unbekannt!');
+                    break;
+                }
+                // Aenderungen auslesen
+                if ($data[1] == true) { // OnChange - neuer Wert?
+                    $this->SendDebug('MessageSink', 'Level von: '.$data[2].' auf: '.$data[0].' geändert!');
+                    $this->LevelToPosition($data[0]);
+                } else { // OnChange - keine Zustandsaenderung
+                    $this->SendDebug('MessageSink', 'OnChange unveraendert - keine Zustandsaenderung');
+                }
+            break;
+          }
+    }
+
     /**
      * This function will be available automatically after the module is imported with the module control.
      * Using the custom prefix this function will be callable from PHP and JSON-RPC through:.
@@ -95,22 +141,55 @@ class ShutterActuator extends IPSModule
      * 
      * @return float The actual internal level (position).
      */
-    public function GetPosition()
+    public function Level()
     {
         $vid = $this->ReadPropertyInteger('ReceiverVariable');
         if ($vid != 0) {
             $level = GetValue($vid);
-            $this->SendDebug('GetPosition', 'Aktuelle interne Position ist: '.$level);
+            $this->SendDebug('Level', 'Aktuelle interne Position ist: '.$level);
             
-            return $level;
+            return sprintf('%.2f', $level);
         }
         else {
-            $this->SendDebug('GetPosition', 'Variable zum auslesen der Rollladenposition nicht gesetzt!');
+            $this->SendDebug('Level', 'Variable zum auslesen der Rollladenposition nicht gesetzt!');
 
-            return 'Unknown';
+            return '-1';
         }
     }
     
-
-
+    /**
+     * Map Level to Position.
+     *
+     * @param float $level Shutter level value
+     */
+    private function LevelToPosition(float $level)
+    {
+        // Position Variable
+        $id = $this->GetIDForIdent('Position');
+        // Mapping values   
+        $pos000 = $this->ReadPropertyFloat('Position0');
+        $pos025 = $this->ReadPropertyFloat('Position25');
+        $pos050 = $this->ReadPropertyFloat('Position50');
+        $pos075 = $this->ReadPropertyFloat('Position75');
+        $pos099 = $this->ReadPropertyFloat('Position99');
+        $pos100 = $this->ReadPropertyFloat('Position100');
+        // Level Position - Schalt Position zuweisen
+        $pos = 0;
+        if ($level == $pos000) {
+            $pos = 100;
+        } elseif ($level <= $pos099) {
+            $pos = 99;
+        } elseif ($level > $pos099 && $level <= $pos075) {
+            $pos = 75;
+        } elseif ($level > $pos075 && $level <= $pos050) {
+            $pos = 50;
+        } elseif ($level > $pos050 && $level <= $pos025) {
+            $pos = 25;
+        } else {
+            $pos = 0;
+        }
+        // Zuordnen
+        SetValue($id, $pos);
+    	}
+    }
 }

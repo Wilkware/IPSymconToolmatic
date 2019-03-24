@@ -38,7 +38,7 @@
         {"type": "Button", "caption": "UP", "onClick": "TSA_Up($id);"},
         {"type": "Button", "caption": "STOP", "onClick": "TSA_Stop($id);"},
         {"type": "Button", "caption": "DOWN", "onClick": "TSA_Down($id);"},
-        {"type": "Button", "caption": "SHOW", "onClick": "TSA_GetPosition($id);"}
+        {"type": "Button", "caption": "SHOW", "onClick": "echo 'Position: '.TSA_Level($id).'%%';"}
       ]
     }
   ]
