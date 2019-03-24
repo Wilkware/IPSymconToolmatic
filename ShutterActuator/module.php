@@ -191,9 +191,9 @@ class ShutterActuator extends IPSModule
         $pos100 = $this->ReadPropertyFloat('Position100');
         // Level Position - Schalt Position zuweisen
         $pos = 0;
-        if ($level == $pos000) {
+        if ($level == $pos100) {
             $pos = 100;
-        } elseif ($level <= $pos099) {
+        } elseif ($level > $pos100 && $level <= $pos099) {
             $pos = 99;
         } elseif ($level > $pos099 && $level <= $pos075) {
             $pos = 75;
