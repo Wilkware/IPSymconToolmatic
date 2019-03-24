@@ -44,7 +44,7 @@ class ShutterActuator extends IPSModule
         ];
         $this->RegisterProfile(vtInteger, 'HM.ShutterActuator', 'Jalousie', '', '', 0, 100, 0, 0, $association);
         // Position
-        $this->MaintainVariable('Position', 'Position', vtFloat, 'HM.ShutterActuator', 1, true);
+        $this->MaintainVariable('Position', 'Position', vtInteger, 'HM.ShutterActuator', 1, true);
         // Create our trigger
         if (IPS_VariableExists($this->ReadPropertyInteger('ReceiverVariable'))) {
             $this->RegisterMessage($this->ReadPropertyInteger('ReceiverVariable'), VM_UPDATE);
