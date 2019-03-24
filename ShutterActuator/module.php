@@ -32,7 +32,7 @@ class ShutterActuator extends IPSModule
         // Position
         $this->MaintainVariable('Position', 'Position', vtFloat, '', 1, true);
     }
-    
+
     /**
      * This function will be available automatically after the module is imported with the module control.
      * Using the custom prefix this function will be callable from PHP and JSON-RPC through:.
@@ -45,8 +45,7 @@ class ShutterActuator extends IPSModule
         if ($vid != 0) {
             $this->SendDebug('Up', 'Rollladen hochfahren!');
             RequestAction($vid, 1.0);
-        }
-        else {
+        } else {
             $this->SendDebug('Up', 'Variable zum steuern des Rollladens nicht gesetzt!');
         }
     }
@@ -63,8 +62,7 @@ class ShutterActuator extends IPSModule
         if ($vid != 0) {
             $this->SendDebug('Down', 'Rollladen runterfahren!');
             RequestAction($vid, 0.0);
-        }
-        else {
+        } else {
             $this->SendDebug('Down', 'Variable zum steuern des Rollladens nicht gesetzt!');
         }
     }
@@ -81,8 +79,7 @@ class ShutterActuator extends IPSModule
         if ($vid != 0) {
             $this->SendDebug('Stop', 'Rollladen angehalten!');
             RequestAction($vid, true);
-        }
-        else {
+        } else {
             $this->SendDebug('Stop', 'Variable zum stoppen des Rollladens nicht gesetzt!');
         }
     }
@@ -92,7 +89,7 @@ class ShutterActuator extends IPSModule
      * Using the custom prefix this function will be callable from PHP and JSON-RPC through:.
      *
      * TSA_GetPosition($id);
-     * 
+     *
      * @return float The actual internal level (position).
      */
     public function GetPosition()
@@ -101,16 +98,12 @@ class ShutterActuator extends IPSModule
         if ($vid != 0) {
             $level = GetValue($vid);
             $this->SendDebug('GetPosition', 'Aktuelle interne Position ist: '.$level);
-            
+
             return $level;
-        }
-        else {
+        } else {
             $this->SendDebug('GetPosition', 'Variable zum auslesen der Rollladenposition nicht gesetzt!');
 
             return 'Unknown';
         }
     }
-    
-
-
 }
