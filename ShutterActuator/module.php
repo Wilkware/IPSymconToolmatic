@@ -27,10 +27,16 @@ class ShutterActuator extends IPSModule
 
     public function ApplyChanges()
     {
-        // Trigger???
+        // Level Trigger
         if ($this->ReadPropertyInteger('ReceiverVariable') != 0) {
             $this->UnregisterMessage($this->ReadPropertyInteger('ReceiverVariable'), VM_UPDATE);
         }
+        // Position Trigger
+        $id = $this->GetIDForIdent('Position');
+        if ($id != 0) {
+            $this->UnregisterMessage($id, VM_UPDATE);
+        }
+        
         // Never delete this line!
         parent::ApplyChanges();
         // Variable Profile
@@ -49,6 +55,11 @@ class ShutterActuator extends IPSModule
         if (IPS_VariableExists($this->ReadPropertyInteger('ReceiverVariable'))) {
             $this->RegisterMessage($this->ReadPropertyInteger('ReceiverVariable'), VM_UPDATE);
         }
+        // Position Trigger
+        $id = $this->GetIDForIdent('Position');
+        if ($id != 0) {
+            $this->RegisterMessage($id, VM_UPDATE);
+        }
     }
 
     /**
@@ -65,7 +76,6 @@ class ShutterActuator extends IPSModule
             case VM_UPDATE:
                 // ReceiverVariable
                 if ($senderID == $this->ReadPropertyInteger('ReceiverVariable')) {
-                    $this->SendDebug('MessageSink', 'SenderID: '.$senderID.' unbekannt!');
                     // Aenderungen auslesen
                     if ($data[1] == true) { // OnChange - neuer Wert?
                         $this->SendDebug('MessageSink', 'Level: '.$data[2].' => '.$data[0]);
@@ -80,12 +90,12 @@ class ShutterActuator extends IPSModule
                     $this->SendDebug('MessageSink', 'SenderID: '.$senderID.' unbekannt!');
                 } else {
                     // Aenderungen auslesen
-                  if ($data[1] == true) { // OnChange - neuer Wert?
-                      $this->SendDebug('MessageSink', 'Position: '.$data[2].' => '.$data[0]);
-                  //$this->LevelToPosition($data[0]);
-                  } else { // OnChange - keine Zustandsaenderung
-                      $this->SendDebug('MessageSink', 'Position unveraendert - keine Wertaenderung');
-                  }
+                    if ($data[1] == true) { // OnChange - neuer Wert?
+                        $this->SendDebug('MessageSink', 'Position: '.$data[2].' => '.$data[0]);
+                        $this->LevelToPosition($data[0]);
+                    } else { // OnChange - keine Zustandsaenderung
+                        $this->SendDebug('MessageSink', 'Position unveraendert - keine Wertaenderung');
+                    }
                 }
             break;
           }
@@ -198,5 +208,46 @@ class ShutterActuator extends IPSModule
         }
         // Zuordnen
         SetValue($id, $pos);
+    }
+
+    /**
+     * Map Position to Level.
+     *
+     * @param int $level Shutter level value
+     */
+    private function PositionToLevel(int $position)
+    {
+        // Level Variable
+        $vid = $this->ReadPropertyInteger('TransmitterVariable');
+        // Mapping values
+        $pos000 = $this->ReadPropertyFloat('Position0');
+        $pos025 = $this->ReadPropertyFloat('Position25');
+        $pos050 = $this->ReadPropertyFloat('Position50');
+        $pos075 = $this->ReadPropertyFloat('Position75');
+        $pos099 = $this->ReadPropertyFloat('Position99');
+        $pos100 = $this->ReadPropertyFloat('Position100');
+        // Level Position - Schalt Position zuweisen
+        $level = 0.;
+        // Positon übersetzen
+        switch($position) {
+            case 0:
+                $level = $pos000;
+                break;
+            case 25:
+                $level = $pos025;
+                break;
+            case 50:
+                $level = $pos050;
+                break;
+            case 75:
+                $level = $pos075;
+                break;
+            case 99:
+                $level = $pos099;
+                break;
+            default:
+                $level = $pos100;
+        }
+        RequestAction($vid, $level);
     }
 }
