@@ -36,7 +36,7 @@ class ShutterActuator extends IPSModule
         if ($id != 0) {
             $this->UnregisterMessage($id, VM_UPDATE);
         }
-        
+
         // Never delete this line!
         parent::ApplyChanges();
         // Variable Profile
@@ -229,7 +229,7 @@ class ShutterActuator extends IPSModule
         // Level Position - Schalt Position zuweisen
         $level = 0.;
         // Positon übersetzen
-        switch($position) {
+        switch ($position) {
             case 0:
                 $level = $pos000;
                 break;
