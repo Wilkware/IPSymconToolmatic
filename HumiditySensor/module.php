@@ -105,7 +105,7 @@ class HumitidySensor extends IPSModule
             $this->SendDebug('UPDATE', 'Humidity Outdoor not set!');
             $state = false;
         }
-        // Temp indoor
+        // Temp Indoor
         $ti = $this->ReadPropertyInteger('TempIndoor');
         if ($ti != 0) {
             $ti = GetValue($ti);
