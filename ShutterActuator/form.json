@@ -18,16 +18,16 @@
     },
     {"type": "RowLayout",
       "items": [
-        { "type": "NumberSpinner", "name": "Position0",  "caption": "Open/Up (0%)", "digits": 2, "suffix": "%"},
-        { "type": "NumberSpinner", "name": "Position25", "caption": "Quarter (25%)", "digits": 2, "suffix": "%"},
-        { "type": "NumberSpinner", "name": "Position50", "caption": "Half (50%)", "digits": 2, "suffix": "%"}
+        { "type": "NumberSpinner", "name": "Position0",  "caption": "Open/Up (0%):", "digits": 2, "suffix": "%"},
+        { "type": "NumberSpinner", "name": "Position25", "caption": "Quarter (25%):", "digits": 2, "suffix": "%"},
+        { "type": "NumberSpinner", "name": "Position50", "caption": "Half (50%):", "digits": 2, "suffix": "%"}
       ]
     },    
     {"type": "RowLayout",
       "items": [
-        { "type": "NumberSpinner", "name": "Position75",  "caption": "Three quarter (75%)", "digits": 2, "suffix": "%"},
-        { "type": "NumberSpinner", "name": "Position99",  "caption": "Almost closed (99%)", "digits": 2, "suffix": "%"},
-        { "type": "NumberSpinner", "name": "Position100", "caption": "Close/Down (100%)", "digits": 2, "suffix": "%"}
+        { "type": "NumberSpinner", "name": "Position75",  "caption": "Three quarter (75%):", "digits": 2, "suffix": "%"},
+        { "type": "NumberSpinner", "name": "Position99",  "caption": "Almost closed (99%):", "digits": 2, "suffix": "%"},
+        { "type": "NumberSpinner", "name": "Position100", "caption": "Close/Down (100%):", "digits": 2, "suffix": "%"}
       ]
     }    
   ],

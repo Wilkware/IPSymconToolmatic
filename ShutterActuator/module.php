@@ -31,12 +31,6 @@ class ShutterActuator extends IPSModule
         if ($this->ReadPropertyInteger('ReceiverVariable') != 0) {
             $this->UnregisterMessage($this->ReadPropertyInteger('ReceiverVariable'), VM_UPDATE);
         }
-        // Position Trigger
-        $id = $this->GetIDForIdent('Position');
-        if ($id != 0) {
-            $this->UnregisterMessage($id, VM_UPDATE);
-        }
-
         // Never delete this line!
         parent::ApplyChanges();
         // Variable Profile
@@ -51,14 +45,11 @@ class ShutterActuator extends IPSModule
         $this->RegisterProfile(vtInteger, 'HM.ShutterActuator', 'Jalousie', '', '', 0, 100, 0, 0, $association);
         // Position
         $this->MaintainVariable('Position', 'Position', vtInteger, 'HM.ShutterActuator', 1, true);
+        // Enable Action / Request Action
+        $this->EnableAction('Position');
         // Create our trigger
         if (IPS_VariableExists($this->ReadPropertyInteger('ReceiverVariable'))) {
             $this->RegisterMessage($this->ReadPropertyInteger('ReceiverVariable'), VM_UPDATE);
-        }
-        // Position Trigger
-        $id = $this->GetIDForIdent('Position');
-        if ($id != 0) {
-            $this->RegisterMessage($id, VM_UPDATE);
         }
     }
 
@@ -75,7 +66,9 @@ class ShutterActuator extends IPSModule
         switch ($message) {
             case VM_UPDATE:
                 // ReceiverVariable
-                if ($senderID == $this->ReadPropertyInteger('ReceiverVariable')) {
+                if ($senderID != $this->ReadPropertyInteger('ReceiverVariable')) {
+                    $this->SendDebug('MessageSink', 'SenderID: '.$senderID.' unbekannt!');
+                } else {
                     // Aenderungen auslesen
                     if ($data[1] == true) { // OnChange - neuer Wert?
                         $this->SendDebug('MessageSink', 'Level: '.$data[2].' => '.$data[0]);
@@ -84,21 +77,25 @@ class ShutterActuator extends IPSModule
                         $this->SendDebug('MessageSink', 'Level unveraendert - keine Wertaenderung');
                     }
                 }
-                // Position Variable
-                $id = $this->GetIDForIdent('Position');
-                if ($senderID != $id) {
-                    $this->SendDebug('MessageSink', 'SenderID: '.$senderID.' unbekannt!');
-                } else {
-                    // Aenderungen auslesen
-                    if ($data[1] == true) { // OnChange - neuer Wert?
-                        $this->SendDebug('MessageSink', 'Position: '.$data[2].' => '.$data[0]);
-                        $this->LevelToPosition($data[0]);
-                    } else { // OnChange - keine Zustandsaenderung
-                        $this->SendDebug('MessageSink', 'Position unveraendert - keine Wertaenderung');
-                    }
-                }
-            break;
+                break;
           }
+    }
+
+    /**
+     * RequestAction - SDK function.
+     *
+     * @param float $level Shutter level value
+     */
+    public function RequestAction($ident, $value) 
+    {
+        //$this->SendDebug('RequestAction', 'Ident: '.$ident.' Value: '.$value, 0);
+        switch($ident) {
+            case "Position":
+                $this->LevelToPosition($value);
+                break;
+            default:
+                throw new Exception("Invalid Ident");
+        }
     }
 
     /**
