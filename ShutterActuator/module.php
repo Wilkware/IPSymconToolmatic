@@ -79,10 +79,10 @@ class ShutterActuator extends IPSModule
                 if ($senderID != $id) {
                     $this->SendDebug('MessageSink', 'SenderID: '.$senderID.' unbekannt!');
                 } else {
-                  // Aenderungen auslesen
+                    // Aenderungen auslesen
                   if ($data[1] == true) { // OnChange - neuer Wert?
                       $this->SendDebug('MessageSink', 'Position: '.$data[2].' => '.$data[0]);
-                      //$this->LevelToPosition($data[0]);
+                  //$this->LevelToPosition($data[0]);
                   } else { // OnChange - keine Zustandsaenderung
                       $this->SendDebug('MessageSink', 'Position unveraendert - keine Wertaenderung');
                   }
