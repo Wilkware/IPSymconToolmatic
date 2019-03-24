@@ -86,15 +86,15 @@ class ShutterActuator extends IPSModule
      *
      * @param float $level Shutter level value
      */
-    public function RequestAction($ident, $value) 
+    public function RequestAction($ident, $value)
     {
         //$this->SendDebug('RequestAction', 'Ident: '.$ident.' Value: '.$value, 0);
-        switch($ident) {
-            case "Position":
+        switch ($ident) {
+            case 'Position':
                 $this->LevelToPosition($value);
                 break;
             default:
-                throw new Exception("Invalid Ident");
+                throw new Exception('Invalid Ident');
         }
     }
 
