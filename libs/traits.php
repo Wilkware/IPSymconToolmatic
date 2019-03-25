@@ -272,11 +272,12 @@ trait ProfileHelper
         IPS_SetVariableProfileIcon($name, $icon);
         IPS_SetVariableProfileText($name, $prefix, $suffix);
         IPS_SetVariableProfileDigits($name, $digits);
-
+        /* Not correct for icon visuality (0-100)
         if (($asso !== null) && (count($asso) !== 0)) {
             $minvalue = 0;
             $maxvalue = 0;
         }
+        */
         IPS_SetVariableProfileValues($name, $minvalue, $maxvalue, $stepsize);
 
         if (($asso !== null) && (count($asso) !== 0)) {
