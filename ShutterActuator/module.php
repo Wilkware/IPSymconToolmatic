@@ -225,7 +225,18 @@ class ShutterActuator extends IPSModule
         $pos075 = $this->ReadPropertyFloat('Position75');
         $pos099 = $this->ReadPropertyFloat('Position99');
         $pos100 = $this->ReadPropertyFloat('Position100');
-        // Level Position - Schalt Position zuweisen
+        // Position kann manuell, via Voicontrol auch gesetzt worden sein
+        // dann normieren auf Profilwerte :(
+        if ($position > 0 && $position < 25) {
+            $position = 25;
+        } elseif ($position > 25 && $position < 50) {
+            $position = 50;
+        } elseif ($position > 50 && $position < 75) {
+            $position = 75;
+        } elseif ($position > 75 && $position < 100) {
+            $position = 99;
+        }
+        // Schalt Position - Level Position - zuweisen
         $level = 0.;
         // Positon übersetzen
         switch ($position) {

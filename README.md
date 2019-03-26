@@ -1,13 +1,13 @@
 [![Version](https://img.shields.io/badge/Symcon-PHP--Bibliothek-purple.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
-[![Product](https://img.shields.io/badge/Symcon%20Version-4.1%20%3E-blue.svg)](https://www.symcon.de/produkt/)
-[![Version](https://img.shields.io/badge/Modul%20Version-1.2.20190317-orange.svg)](https://github.com/Wilkware/IPSymconToolmatic)
+[![Product](https://img.shields.io/badge/Symcon%20Version-5.0%20%3E-blue.svg)](https://www.symcon.de/produkt/)
+[![Version](https://img.shields.io/badge/Modul%20Version-4.0.20190326-orange.svg)](https://github.com/Wilkware/IPSymconToolmatic)
 [![Licence](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![StyleCI](https://github.styleci.io/repos/76893952/shield?style=flat)](https://github.styleci.io/repos/76893952)
 
 # IPSymconToolmatic
 
-Dies ist eine kleine Tool-Sammlung für die Steuerung von HomeMatic(HM & HmIP) Geräten.
-Hauptsächlich beinhaltet es sich um kleine Erweiterung zur Automatisierung von Aktoren 
+Dies ist eine kleine Tool-Sammlung im Zusammenhang mit HomeMatic Geräten.
+Hauptsächlich beinhaltet es kleine Erweiterung zur Automatisierung von Aktoren 
 oder erleichtert das Steuern von Geäten bzw. bietet mehr Komfort bei der Bedienung.
 
 Folgende Module beinhaltet das IP Symcon Toolmatic Repository:
@@ -19,17 +19,17 @@ Folgende Module beinhaltet das IP Symcon Toolmatic Repository:
 	Melden bzw. Schalten von Bewegungen in Abhängigkeit der Helligkeit (falls Sensor vorhanden).
 
 - __Rollladenaktor__ ([Dokumentation](ShutterActuator))  
-	Anfahren von vordefinierten Positionen mittels zeitlicher Vorgaben.
+	Anfahren von eingemessenen Positionen.
 
 - __Luftfeuchtigssensor__ ([Dokumentation](HumitidySensor))  
-	Lohnt sich das Lüften? Berechnung von Wassergehalt und Taupunkt mit ensprechender Entscheidungsvorlage. 
+	Lohnt sich das Lüften? Berechnung von Wassergehalt und Taupunkt mit ensprechender Entscheidungsvorlage.
 
 ### Historie
 
 * 2016-12-20 - Modul Lichtautomat(LightAutomat)
 * 2017-01-01 - Modul Präsensmelder(PresenceDetector)
-* 2019-03-17 - Modul Rollladenaktor(ShutterActuator)
 * 2019-03-17 - Modul Luftfeuchtigssensor(HumitidySensor)
+* 2019-03-26 - Modul Rollladenaktor(ShutterActuator)
 
 ### Entwickler
 * Heiko Wilknitz ([@wilkware](https://github.com/wilkware))
