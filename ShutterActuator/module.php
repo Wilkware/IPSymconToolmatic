@@ -15,7 +15,6 @@ class ShutterActuator extends IPSModule
         // Shutter variables
         $this->RegisterPropertyInteger('ReceiverVariable', 0);
         $this->RegisterPropertyInteger('TransmitterVariable', 0);
-        $this->RegisterPropertyInteger('StopVariable', 0);
         // Position(Level) Variables
         $this->RegisterPropertyFloat('Position0', 1.0);
         $this->RegisterPropertyFloat('Position25', 0.85);
@@ -141,12 +140,14 @@ class ShutterActuator extends IPSModule
      */
     public function Stop()
     {
-        $vid = $this->ReadPropertyInteger('StopVariable');
+        $vid = $this->ReadPropertyInteger('TransmitterVariable');
         if ($vid != 0) {
+            $pid = IPS_GetParent($vid);
             $this->SendDebug('Stop', 'Rollladen angehalten!');
-            RequestAction($vid, true);
+            HM_WriteValueBoolean($pid, 'STOP', true)
+            //RequestAction($vid, true);
         } else {
-            $this->SendDebug('Stop', 'Variable zum stoppen des Rollladens nicht gesetzt!');
+            $this->SendDebug('Stop', 'Variable zum steuern des Rollladens nicht gesetzt!');
         }
     }
 
