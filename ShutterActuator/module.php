@@ -144,7 +144,7 @@ class ShutterActuator extends IPSModule
         if ($vid != 0) {
             $pid = IPS_GetParent($vid);
             $this->SendDebug('Stop', 'Rollladen angehalten!');
-            HM_WriteValueBoolean($pid, 'STOP', true)
+            HM_WriteValueBoolean($pid, 'STOP', true);
             //RequestAction($vid, true);
         } else {
             $this->SendDebug('Stop', 'Variable zum steuern des Rollladens nicht gesetzt!');
