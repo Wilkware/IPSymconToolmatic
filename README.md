@@ -1,6 +1,6 @@
 [![Version](https://img.shields.io/badge/Symcon-PHP--Bibliothek-purple.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
 [![Product](https://img.shields.io/badge/Symcon%20Version-5.0%20%3E-blue.svg)](https://www.symcon.de/produkt/)
-[![Version](https://img.shields.io/badge/Modul%20Version-4.0.20190326-orange.svg)](https://github.com/Wilkware/IPSymconToolmatic)
+[![Version](https://img.shields.io/badge/Modul%20Version-4.0.20190415-orange.svg)](https://github.com/Wilkware/IPSymconToolmatic)
 [![Licence](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![StyleCI](https://github.styleci.io/repos/76893952/shield?style=flat)](https://github.styleci.io/repos/76893952)
 
@@ -26,10 +26,10 @@ Folgende Module beinhaltet das IP Symcon Toolmatic Repository:
 
 ### Historie
 
-* 2016-12-20 - Modul Lichtautomat(LightAutomat)
-* 2017-01-01 - Modul Präsensmelder(PresenceDetector)
+* 2019-04-15 - Modul Rollladenaktor(ShutterActuator)
 * 2019-03-17 - Modul Luftfeuchtigssensor(HumitidySensor)
-* 2019-03-26 - Modul Rollladenaktor(ShutterActuator)
+* 2017-01-01 - Modul Präsensmelder(PresenceDetector)
+* 2016-12-20 - Modul Lichtautomat(LightAutomat)
 
 ### Entwickler
 * Heiko Wilknitz ([@wilkware](https://github.com/wilkware))
