@@ -1,9 +1,9 @@
 {
-	"id": "{F96AD408-75FF-4665-B1D2-F092B52FC994}",
-	"author": "Wilkware",
-	"name": "Toolmatic",
-	"url": "https://github.com/Wilkware/",
-	"version": "1.0",
-	"build": 0,
-	"date": 0
+  "id": "{F96AD408-75FF-4665-B1D2-F092B52FC994}",
+  "author": "Wilkware (@Pitti)",
+  "name": "Toolmatic",
+  "url": "https://github.com/Wilkware",
+  "version": "4.0",
+  "build": 20190326,
+  "date": 1553558400
 }

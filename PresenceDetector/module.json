@@ -1,10 +1,9 @@
 {
   "id": "{C8FA699E-F608-4988-BFE7-3EFE068F633F}",
-  "name": "PresenceDetector",
+  "name": "Presence Detector",
   "type": 3,
   "vendor": "",
-  "aliases": 
-  [
+  "aliases": [
     "Präsensmelder",
     "Bewegungsmelder"
   ],

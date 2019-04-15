@@ -1,10 +1,9 @@
 {
   "id": "{7F7BE9E1-FD90-4BF5-89C0-4EEB431F22F9}",
-  "name": "LightAutomat",
+  "name": "Light Automat",
   "type": 3,
   "vendor": "",
-  "aliases": 
-  [
+  "aliases": [
     "Lichtautomat",
     "Treppenautomat",
     "Tasterschaltung"

@@ -1,4 +1,11 @@
+[![Version](https://img.shields.io/badge/Symcon-PHP--Modul-red.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
+[![Product](https://img.shields.io/badge/Symcon%20Version-4.1%20%3E-blue.svg)](https://www.symcon.de/produkt/)
+[![Version](https://img.shields.io/badge/Modul%20Version-3.2.20170322-orange.svg)](https://github.com/Wilkware/IPSymconToolmatic)
+[![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![StyleCI](https://github.styleci.io/repos/76893952/shield?style=flat)](https://github.styleci.io/repos/76893952)
+
 # Lichtautomat
+Überwacht und schaltet das Licht automatisch nach einer bestimmten Zeit wieder aus.
 
 ### Inhaltverzeichnis
 
@@ -9,6 +16,7 @@
 5. [Statusvariablen und Profile](#5-statusvariablen-und-profile)
 6. [WebFront](#6-webfront)
 7. [PHP-Befehlsreferenz](#7-php-befehlsreferenz)
+8. [Versionshistorie](#8-versionshistorie)
 
 ### 1. Funktionsumfang
 
@@ -21,16 +29,16 @@
 * Dauerbetrieb mittels hinterlegter boolean Variable, wenn **true** wird kein Timer gestartet.
 * Modul mit Bewegungsmelder, wenn dieser aktiv ist wird der Timer immer wieder erneuert.
 * Über die Funktion _TLA_Duration(id, minuten)_ kann die Wartezeit via Script (WebFront) gesetzt werden.
-* _NEU_: Statusvariable muss nicht von einer HM-Instanze sein, kann auch einfach eine boolsche Variable sein.
+* Statusvariable muss nicht von einer HM-Instanze sein, kann auch einfach eine boolsche Variable sein.
 
 ### 2. Voraussetzungen
 
-- IP-Symcon ab Version 4.x
+- IP-Symcon ab Version 4.1 
 
 ### 3. Software-Installation
 
-Über das Modul-Control folgende URL hinzufügen.  
-`git://github.com/Wilkware/IPSymconToolmatic.git`
+Über das Modul-Control folgende URL hinzufügen.<br />
+`https://github.com/Wilkware/IPSymconToolmatic` oder `git://github.com/Wilkware/IPSymconToolmatic.git`
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
@@ -62,23 +70,53 @@ Es werden keine zusätzlichen Profile benötigt.
 
 ### 6. WebFront
 
-Es ist keine weitere Steuerung oder gesonderte Darstellung integriert.  
-Der Dauerbetrieb kann über einen einfachen Switch im WF realsiert werden.  
+Es ist keine weitere Steuerung oder gesonderte Darstellung integriert.<br />
+Der Dauerbetrieb kann über einen einfachen Switch im WF realsiert werden.<br />
 Die Wartezeit kann auch über ein Textfeld oder Variablenprofil und Script gesteuert (TLA_Duration) werden.
 
 ### 7. PHP-Befehlsreferenz
 
-`void TLA_Trigger(int $InstanzID);`  
-Schaltet das Licht (den Actor) aus.  
-Die Funktion liefert keinerlei Rückgabewert.  
+`void TLA_Trigger(int $InstanzID);`<br />
+Schaltet das Licht (den Actor) aus.<br />
+Die Funktion liefert keinerlei Rückgabewert.<br />
 
-Beispiel:  
-`TLA_Trigger(12345);`  
+Beispiel:<br />
+`TLA_Trigger(12345);`<br />
 
-`void TLA_Duration(int $InstanzID, int x);`  
-Setzt die Wartezeit (Timer) auf die neuen 'x' Minuten.  
+`void TLA_Duration(int $InstanzID, int x);`<br />
+Setzt die Wartezeit (Timer) auf die neuen 'x' Minuten.<br />
 Die Funktion liefert keinerlei Rückgabewert.
 
-Beispiel:  
-`TLA_Duration(12345, 10);`  
+Beispiel:<br />
+`TLA_Duration(12345, 10);`<br />
 Setzt die Wartezeit auf 10 Minuten.
+
+### 8. Versionshistorie
+
+v3.2.20170322
+* _FIX_: Anpassungen für IPS Version 5
+
+v3.1.20170120
+* _FIX_: Korrekte Auswertung der Schaltvariable.
+
+v3.0.20170109
+* _NEU_: Dauerbetrieb miitels hinterlegter boolean Variable, wenn _true_ wird kein Timer gestartet.
+* _NEU_: Modul mit Bewegungsmelder, wenn dieser aktiv ist wird der Timer immer wieder erneuert.
+* _NEU_: Über die Funktion _TLA_Duration(id, minuten)_ kann die Wartezeit via Script (WebFront) gesetzt werden.
+
+v2.0.20170101
+* _FIX_: Umstellung auf Nachrichten (RegisterMessage/MessageSink)
+* _NEU_: Erweiterung zum Ausführen eines Scriptes
+
+v1.0.20161220
+* _NEU_: Initialversion
+
+### Entwickler
+* Heiko Wilknitz ([@wilkware](https://github.com/wilkware))
+
+### Spenden
+Die Software ist für die nicht kommzerielle Nutzung kostenlos, Schenkungen als Unterstützung für den Entwickler bitte hier:<br />
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8816166" target="_blank"><img src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donate_LG.gif" border="0" /></a>
+
+### Lizenz
+[![Licence](https://licensebuttons.net/i/l/by-nc-sa/transparent/00/00/00/88x31-e.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
