@@ -21,7 +21,7 @@ Folgende Module beinhaltet das IP Symcon Toolmatic Repository:
 - __Rollladenaktor__ ([Dokumentation](ShutterActuator))  
 	Anfahren von eingemessenen Positionen.
 
-- __Luftfeuchtigssensor__ ([Dokumentation](HumitidySensor))  
+- __Luftfeuchtigssensor__ ([Dokumentation](HumiditySensor))  
 	Lohnt sich das Lüften? Berechnung von Wassergehalt und Taupunkt mit ensprechender Entscheidungsvorlage.
 
 ### Historie
