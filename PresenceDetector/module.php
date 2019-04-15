@@ -1,9 +1,11 @@
 <?php
+
 require_once __DIR__.'/../libs/traits.php';  // Allgemeine Funktionen
 // CLASS PresenceDetector
 class PresenceDetector extends IPSModule
 {
     use DebugHelper;
+
     public function Create()
     {
         //Never delete this line!
@@ -15,6 +17,7 @@ class PresenceDetector extends IPSModule
         $this->RegisterPropertyInteger('ScriptVariable', 0);
         $this->RegisterPropertyBoolean('OnlyBool', false);
     }
+
     public function ApplyChanges()
     {
         if ($this->ReadPropertyInteger('MotionVariable') != 0) {
@@ -27,6 +30,7 @@ class PresenceDetector extends IPSModule
             $this->RegisterMessage($this->ReadPropertyInteger('MotionVariable'), VM_UPDATE);
         }
     }
+
     /**
      * Interne Funktion des SDK.
      * data[0] = neuer Wert
@@ -55,6 +59,7 @@ class PresenceDetector extends IPSModule
             break;
         }
     }
+
     /**
      * This function will be available automatically after the module is imported with the module control.
      * Using the custom prefix this function will be callable from PHP and JSON-RPC through:.
@@ -69,6 +74,7 @@ class PresenceDetector extends IPSModule
             $tv = $this->ReadPropertyInteger('ThresholdValue');
             if ($tv != 0 && $bv > $tv) {
                 $this->SendDebug('SwitchState', 'Oberhalb Schwellwert: '.$bv.'(Schwellwert: '.$tv.')');
+
                 return; // nix zu tun
             }
             $this->SendDebug('SwitchState', 'Immer oder unterhalb Schwellwert: '.$bv.' (Schwellwert: '.$tv.')');
@@ -96,6 +102,7 @@ class PresenceDetector extends IPSModule
             }
         }
     }
+
     /**
      * This function will be available automatically after the module is imported with the module control.
      * Using the custom prefix this function will be callable from PHP and JSON-RPC through:.
@@ -111,8 +118,10 @@ class PresenceDetector extends IPSModule
         if ((($threshold % 5) == 0) && $threshold >= 0 && $threshold <= 50 || $threshold = 75 || $threshold = 100) {
             IPS_SetProperty($this->InstanceID, 'ThresholdValue', $threshold);
             IPS_ApplyChanges($this->InstanceID);
+
             return true;
         }
+
         return false;
     }
 }
